@@ -8,6 +8,12 @@ const fetchSuccess = (searchKey: string, total: number, Movies: MovieBySearch[])
         total: total,
     };
 };
+const fetchMovieDetailSuccess = (MovieDetail: MovieById) => {
+    return {
+        type: actionTypes.FETCH.FETCH_MOVIE_DETAIL_SUCCESS,
+        MovieDetail: MovieDetail
+    };
+};
 const querySuccess = (searchKey: string, Movies: MovieBySearch) => {
     return {
         type: actionTypes.FETCH.QUERY_SUCCESS,
@@ -16,6 +22,7 @@ const querySuccess = (searchKey: string, Movies: MovieBySearch) => {
     };
 };
 export default {
+    fetchMovieDetailSuccess,
     fetchSuccess,
     querySuccess
 };
