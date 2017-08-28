@@ -1,21 +1,26 @@
 import actionTypes from '../actions/actionTypes';
 export type State = {
-    queryKey: string,
-    queriedMovie: MovieById[],
+    currentImdbId: string,
+    movieDetails: {
+        [key: string]: MovieById
+    },
 };
 const initialState = {
-    queryKey: '',
-    queriedMovie: []
+    currentImdbId: '',
+    movieDetails: {}
 };
-const movieReducer = (state: State =  initialState, action: FetchMovieByQuery) => {
+const movieReducer = (state: State =  initialState, action: FetchMovieById) => {
     switch (action.type) {
-        case actionTypes.FETCH.QUERY_SUCCESS :
+        case actionTypes.FETCH.FETCH_MOVIE_DETAIL_SUCCESS :
             return {
                 ...state,
-                queryKey: action.searchKey,
-                queriedMovie: action.Movies
+                currentImdbId: action.MovieDetail.imdbID,
+                movieDetails: {
+                    ...state.movieDetails,
+                    [action.MovieDetail.imdbID]: action.MovieDetail
+                }
             };
         default: return state;
     }
 };
-export default movieReducer;
+export default movieReducer; 

@@ -1,5 +1,6 @@
 import actionTypes from '../actions/actionTypes';
-const enum Enum {
+import { MoviesContainer } from '../../utils/movieContainer';
+export const enum Enum {
     NonSort,
     SortByAscYear,
     SortByDescYear
@@ -12,74 +13,7 @@ export type State = {
     searchKeys: Set<string>;
     failure: string;
 };
-export class MoviesContainer {
-    Movies: MovieBySearch[] = [];
-    MoviesByAsc: MovieBySearch[] = [];
-    MoviesByDesc: MovieBySearch[] = [];
-    sorted: Enum = Enum.NonSort;
-    currentPage: number = 1;
-    totalNum: number;
-    totalPage: number = 0;
-    constructor(
-        Movies: MovieBySearch[],
-        totalNum?: number
-    ) {
-        this.Movies = Movies;
-        if (totalNum) {
-            this.totalNum = totalNum;
-        }
-        this.setTotalPage();
-    }
-    changeSorted(howSorted: Enum) {
-        if ( howSorted === Enum.SortByAscYear && this.Movies.length !== 0) {
-            this.MoviesByAsc =  this.sortByAsc(this.Movies);
-            this.sorted = howSorted;
-        } else if ( howSorted === Enum.SortByDescYear && this.Movies.length !== 0) {
-            this.MoviesByDesc = this.sortByDesc(this.Movies);
-            this.sorted = howSorted;
-        }
-        this.Movies = this.sortByNone(this.Movies);
-        this.sorted = howSorted;
-    }
-    getMovies(): MovieBySearch[] {
-        if (this.sorted === Enum.SortByAscYear) {
-            return this.MoviesByAsc;
-        } else if (this.sorted === Enum.SortByDescYear) {
-            return this.MoviesByDesc;
-        }
-        return this.Movies;
-    }
-    setMovies(Movies: MovieBySearch[]): void {
-        this.increasePage();
-        if (this.sorted === Enum.NonSort) {
-            this.Movies = this.Movies.concat(Movies);
-        } else if (this.sorted === Enum.SortByAscYear) {
-            this.Movies = this.Movies.concat(Movies);
-            this.MoviesByAsc = this.sortByAsc(this.Movies);
-        } else {
-            this.Movies = this.Movies.concat(Movies);
-            this.MoviesByDesc = this.sortByDesc(this.Movies);
-        }
-    }
-    increasePage(): void {
-        this.currentPage++;
-    }
-    setTotalPage(): void {
-        this.totalPage = Math.round(this.totalNum / 10) + 1;
-    }
-    sortByAsc(movies: MovieBySearch[]): MovieBySearch[] {
-        let emptyMovies: MovieBySearch[] = [];
-        return emptyMovies.concat(movies.sort((a, b) => b.Year - a.Year));
-    }
-    sortByDesc(movies: MovieBySearch[]): MovieBySearch[] {
-        let emptyMovies: MovieBySearch[] = [];
-        return emptyMovies.concat(movies.sort((a, b) => a.Year - b.Year));
-    }
-    sortByNone(movies: MovieBySearch[]): MovieBySearch[] {
-        let emptyMovies: MovieBySearch[] = [];
-        return emptyMovies.concat(movies);
-    }
-}
+
 const initialState = {
     Movies: {},
     currentSearchKey: '',
@@ -123,17 +57,17 @@ const searchReducer = (state: State = initialState, action: FetchMovieBySearch) 
                 Movies: {...state.Movies }
             };
         case actionTypes.CHANGE_SEARCH_STATE.SORT_BY_ASC:
-        state.Movies[state.currentSearchKey].changeSorted(Enum.SortByAscYear);
-        return {
-            ...state,
-            Movies: {...state.Movies } 
-        };
+            state.Movies[state.currentSearchKey].changeSorted(Enum.SortByAscYear);
+            return {
+                ...state,
+                Movies: {...state.Movies } 
+            };
         case actionTypes.CHANGE_SEARCH_STATE.SORT_BY_DESC:
-        state.Movies[state.currentSearchKey].changeSorted(Enum.SortByDescYear);
-        return {
-            ...state,
-            Movies: {...state.Movies }
-        };
+            state.Movies[state.currentSearchKey].changeSorted(Enum.SortByDescYear);
+            return {
+                ...state,
+                Movies: {...state.Movies }
+            };
         default: return state;
     }
 };
