@@ -12,8 +12,9 @@ export type SearchBarProps = {
     changeSearchStateActions: changeSearchStateActions
     changeStateActions: changeStateActions;
     currentY: number;
+    maxY: number;
     searchState: SearchState;
-    apiActions: apiActions
+    apiActions: apiActions;
 };
 class SearchBar extends React.PureComponent<SearchBarProps, {
     SearchBarKey: string;
@@ -22,13 +23,14 @@ class SearchBar extends React.PureComponent<SearchBarProps, {
         SearchBarKey: ''
     };
     componentDidMount() {
+        /*
         window.addEventListener('scroll', () => {
           this.props.changeStateActions
           .changeStatusBar(window.scrollY, (document.body.scrollHeight - window.innerHeight));
        });
+       */
     }
     render() {
-        console.log(this.props);
         return (
             <div>
                 <SearchBarContainer>
@@ -53,7 +55,6 @@ class SearchBar extends React.PureComponent<SearchBarProps, {
                     </SearchBarInputContainer>
                     <br />
                 </SearchBarContainer>
-                <div>
                     <Route 
                         path={`${this.props.match.url}/items/:item`}
                         exact={true}
@@ -61,12 +62,13 @@ class SearchBar extends React.PureComponent<SearchBarProps, {
                         render={() => 
                         <MovieList
                             isFetching={this.props.isFetching}
+                            history={this.props.history}
                             searchState={this.props.searchState}
+                            requestMovieById={this.props.apiActions.requestMovieById}
                             requestMovieBySearch={this.props.apiActions.requestMovieBySearch}
                             requestSwitch={this.props.changeSearchStateActions.requestSwitch}
                         />} 
                     />
-                </div>
             </div>
         );
     }
@@ -76,8 +78,10 @@ class SearchBar extends React.PureComponent<SearchBarProps, {
         });
     }
     private onFetchHandler = (e: React.FormEvent<HTMLInputElement>) => {
-        const location = `${this.props.match.url}/items/${this.state.SearchBarKey}`;
-        this.props.history.push(location);
+        this.props.apiActions.requestMovieBySearch(this.state.SearchBarKey);
+        // change route via history.push is depreciated due to adapt react-router-redux. 
+        // const location = `${this.props.match.url}/items/${this.state.SearchBarKey}`;
+        // this.props.history.push(location);
     }
 }
 export default withRouter(SearchBar as React.ComponentType<any>);

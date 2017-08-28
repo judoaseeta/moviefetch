@@ -28,6 +28,33 @@ export const MovieListContainer = styled.div`
         background: #ddd;
     }
 `;
+export const MovieDetailContainer = styled.div`
+    display: grid;
+    padding: 0.3em;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: minmax(10px, 0.1fr) 1fr 1fr;
+    grid-gap: 0.4em;
+    border: 0.2px black solid;
+    background-color: #bdc3c7;
+    > img {
+        width: 280px;
+        height: 410px;
+    }
+    > div.Panel {
+        grid-column: 1/5;
+        background-color: #DADFE1;
+        display: subgrid;
+        justify-items: center;
+    }
+    > div {
+        border: 0.1px white solid;  
+        padding: 1.2em;
+        background-color: #F2F1EF;
+    }
+    > p {
+        display: inline-block;
+    }
+`;
 export const MovieSummaryContainer = styled.div`
     display:flex;
     flex-flow: column wrap;
@@ -54,14 +81,14 @@ export const HomeContainer = styled.div`
     background-position: center;  
     height: 100vh;
 `;
-export const NavbarContainer = styled.div`
+export const NavbarContainer = styled.header`
     display: flex;
     flex-flow: row nowrap;
     border-bottom: 1px solid black;
     height: 40px;
     justify-content: flex-start;
     background: linear-gradient(to right, #3498db, #2980b9);
-    > div {
+    > nav {
         display: flex;
         justify-content: center;
         align-items: stretch;
@@ -95,6 +122,9 @@ export const SearchBarIcons = styled.div`
     width: 600px;
     flex-flow: row nowrap;
     justify-content: flex-end;
+    &.deactive {
+        display: none;
+    }
 `;
 export const SearchBarIcon = styled.button`
     outline: none;
@@ -137,6 +167,9 @@ export const SearchBarPanelContainer = styled.div`
         position: fixed;
         top:0;
         left:0;
+    }
+    &.deactive {
+        display: none;
     }
 `;
 export const KeyListContainer = styled.div`

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SearchBarIcons as Container, SearchBarIcon } from './styled';
 const SearchBarIcons: React.SFC<{
-    changeSearchStateActions: changeSearchStateActions
+    changeSearchStateActions: changeSearchStateActions;
 }> = (props) => (
     <Container>
         <SearchBarIcon

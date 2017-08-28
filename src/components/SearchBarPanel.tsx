@@ -14,7 +14,7 @@ const SearchBarPanel: React.SFC<{
     match: match<any>;
 }> = (props) => (
     <Container
-        className={props.currentY >= 260 ? 'fixed' : ''}
+        className={(props.searchKeys.size === 0 ? 'deactive' : '') || (props.currentY >= 260 ? 'fixed' : '')}
     >
         <KeyList 
             currentSearchKey={props.currentSearchKey}
@@ -23,7 +23,7 @@ const SearchBarPanel: React.SFC<{
             searchKeys={props.searchKeys}
             match={props.match}
         />
-        <SearchBarIcons 
+        <SearchBarIcons
             changeSearchStateActions={props.changeSearchStateActions}
         />
     </Container>
