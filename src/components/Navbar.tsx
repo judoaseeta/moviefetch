@@ -3,10 +3,10 @@ import NavItem from './NavItem';
 import { NavbarContainer } from './styled';
 const Navbar: React.SFC<{}>  = () => (
     <NavbarContainer>
-        <div>
+        <nav>
             <NavItem to="/">Home</NavItem>
             <NavItem to="/search">Search</NavItem>
-        </div>
+        </nav>
     </NavbarContainer>
 );
 

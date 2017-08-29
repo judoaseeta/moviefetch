@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { MovieSummaryContainer } from './styled';
 export type MovieSummaryProps = {
-    Movie: MovieBySearch
+    Movie: MovieBySearch;
+    requestMovieById: (id: string) => RequestMovieById;
 };
-const MovieSummary: React.SFC<MovieSummaryProps> = ({ Movie }) => (
-    <MovieSummaryContainer>
+const MovieSummary: React.SFC<MovieSummaryProps> = ({ Movie, requestMovieById }) => (
+    <MovieSummaryContainer
+        onClick={() => {
+            requestMovieById(Movie.imdbID);
+        }}
+    >
         {Movie.Poster ? <img src={Movie.Poster} alt="Movie Poster" /> 
                             : null}
         <h4>{Movie.Title}</h4>
@@ -13,10 +18,3 @@ const MovieSummary: React.SFC<MovieSummaryProps> = ({ Movie }) => (
     </MovieSummaryContainer>
 );
 export default MovieSummary;
-/*
-{Movie.Title.length <= 36 
-            ? <h4>{Movie.Title}</h4> 
-            : <div>
-                <h4>{Movie.Title.slice(0, 36)}<br/>{Movie.Title.slice(36, Movie.Title.length)}</h4>
-              </div> }
-*/

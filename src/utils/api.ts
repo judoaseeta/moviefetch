@@ -1,6 +1,5 @@
 const API_KEY = 'f42ed7e7';
 const URL = 'http://www.omdbapi.com';
-
 const fetchMovieById = (id: string) => (
     fetch(`${URL}/?i=${id}&apikey=${API_KEY}`)
         .then(response => {
@@ -10,7 +9,6 @@ const fetchMovieById = (id: string) => (
             return e;
         })
 );
-
 const fetchMovieBySearch = (searchKey: string, page: number) => {
     console.log(page);
     return fetch(`${URL}/?s=${searchKey}&apikey=${API_KEY}&page=${page}`)

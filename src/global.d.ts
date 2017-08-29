@@ -15,6 +15,9 @@ interface RequestMovieBySearch extends Action {
 interface RequestMovieByQuery extends Action {
     searchKey: string
 }
+interface FetchMovieById extends Action {
+    MovieDetail: MovieById
+}
 interface FetchMovieBySearch extends Action {
     Movies: MovieBySearch[],
     searchKey: string,
@@ -30,15 +33,15 @@ type Rating = {
     Value: string;
 }
 type MovieById = {
-    Actors: string;
+    Actors: string[];
     Awards: string;
     BoxOffice: string;
-    Country: string;
+    Country: string[];
     DVD: string;
     Director: string;
-    Genre: string;
-    Language: string;
-    Metascore: string;
+    Genre: string[];
+    Language: string[];
+    Metascore: number;
     Plot: string;
     Poster: string;
     Production: string;
@@ -50,11 +53,11 @@ type MovieById = {
     Title: string;
     Type: string;
     Website: string;
-    Writer: string;
-    Year: string;
+    Writer: string[];
+    Year: number;
     imdbID: string;
-    imdbRating: string;
-    imdbVotes: string;
+    imdbRating: number;
+    imdbVotes: number;
 }
 type MovieBySearch = {
     Title: string
