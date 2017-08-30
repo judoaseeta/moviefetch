@@ -10,7 +10,6 @@ type MovieListProps = {
     location: H.Location;
     match: MovielistMatchProps;
     searchState: SearchState;
-    isShowingDetail: () => Action
     requestSwitch: (searchKey: string) => RequestMovieByQuery;
     requestMovieById: (id: string) => RequestMovieById;
     requestMovieBySearch: (searchKey: string, page?: number) => RequestMovieBySearch

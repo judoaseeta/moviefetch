@@ -62,6 +62,7 @@ class SearchBar extends React.PureComponent<SearchBarProps, {
                         render={() => 
                         <MovieList
                             isFetching={this.props.isFetching}
+                            match={this.props.match}
                             history={this.props.history}
                             searchState={this.props.searchState}
                             requestMovieById={this.props.apiActions.requestMovieById}

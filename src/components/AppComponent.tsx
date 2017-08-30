@@ -48,9 +48,6 @@ const AppComponent: React.SFC<RootState & ActionList & AppProps> = (props) => (
                             changeSearchStateActions={props.changeSearchStateActions}
                             changeStateActions={props.changeStateActions}
                             currentY={props.AppState.currentY}
-                            history={props.history}
-                            location={props.location}
-                            match={props.match}
                             maxY={props.AppState.maxY}
                             isFetching={props.AppState.isFetching}
                             searchState={props.SearchState}

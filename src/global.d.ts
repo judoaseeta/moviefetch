@@ -1,38 +1,38 @@
 declare interface Action {
     type: string
 }
-interface ChangeStatusBar extends Action {
+declare interface ChangeStatusBar extends Action {
     currentY: number,
     maxY: number
 }
-interface RequestMovieById extends Action {
+declare interface RequestMovieById extends Action {
     Id: string
 }
-interface RequestMovieBySearch extends Action {
+declare interface RequestMovieBySearch extends Action {
     searchKey: string,
     page: number
 }
-interface RequestMovieByQuery extends Action {
+declare interface RequestMovieByQuery extends Action {
     searchKey: string
 }
-interface FetchMovieById extends Action {
+declare interface FetchMovieById extends Action {
     MovieDetail: MovieById
 }
-interface FetchMovieBySearch extends Action {
+declare interface FetchMovieBySearch extends Action {
     Movies: MovieBySearch[],
     searchKey: string,
     total: number,
     page: number
 }
-interface FetchMovieByQuery extends Action {
+declare interface FetchMovieByQuery extends Action {
     Movies: MovieBySearch[],
     searchKey: string
 }
-type Rating = {
+declare type Rating = {
     Source: string;
     Value: string;
 }
-type MovieById = {
+declare type MovieById = {
     Actors: string[];
     Awards: string;
     BoxOffice: string;
@@ -59,28 +59,28 @@ type MovieById = {
     imdbRating: number;
     imdbVotes: number;
 }
-type MovieBySearch = {
+declare type MovieBySearch = {
     Title: string
     Year: number,
     imdbID: string,
     Type: string,
     Poster: string
 }
-type apiActions = {
+declare type apiActions = {
     requestMovieById: (Id: string) => RequestMovieById; 
     requestMovieBySearch: (searchKey: string, page?: number) => RequestMovieBySearch;
     requestMovieByQuery: (searchKey: string) => RequestMovieByQuery;
 }
-type changeStateActions = {
+declare type changeStateActions = {
     changeStatusBar: (currentY:number, maxY: number) => ChangeStatusBar
 };
-type changeSearchStateActions = {
+declare type changeSearchStateActions = {
     sortByAsc:() => Action
     sortByDesc:() => Action
     sortByNone:() => Action
     requestSwitch: (searchKey: string) => RequestMovieByQuery;
 };
-type ActionList = {
+declare type ActionList = {
     apiActions: apiActions,
     changeSearchStateActions: changeSearchStateActions
     changeStateActions: changeStateActions
