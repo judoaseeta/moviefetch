@@ -34,35 +34,5 @@
     "build": "react-scripts-ts build",
     "test": "jest",
     "eject": "react-scripts-ts eject"
-  },
-  "jest": {
-    "coverageReporters": [
-      "html",
-      "text"
-    ],
-    "transform": {
-      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransformer.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleNameMapper": {
-      "^.+\\.css$": "identity-obj-proxy"
-    },
-    "mapCoverage": true,
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ]
-  },
-  "globals": {
-    "ts-jest": {
-      "skipBabel": true
-    }
   }
 }
