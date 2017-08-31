@@ -5,7 +5,6 @@ import fetchActions from '../actions/fetchActions';
 import actionTypes from '../actions/actionTypes';
 import { RootState } from '../reducers/';
 import { push } from 'react-router-redux';
-
 const selectSearchKey = (state: RootState) => state.SearchState.currentSearchKey;
 const selectTotalNum = (state: RootState) => {
     if (state.SearchState.currentSearchKey && state.SearchState.Movies[state.SearchState.currentSearchKey].Movies) {
@@ -81,7 +80,8 @@ function* watchFetchRequestById() {
         yield fork(requestMovieById, Id);
     }
 }
+
 export default {
     watchFetchRequestById,
-    watchFetchRequestBySearch
+    watchFetchRequestBySearch,
 };

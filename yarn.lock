@@ -110,7 +110,7 @@ acorn@^4.0.3, acorn@^4.0.4:
   version "4.0.13"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.13.tgz#105495ae5361d697bd195c825192e1ad7f253787"
 
-acorn@^5.0.0:
+acorn@^5.0.0, acorn@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.1.1.tgz#53fe161111f912ab999ee887a90a0bc52822fd75"
 
@@ -1518,6 +1518,10 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
+ejs@^2.5.6:
+  version "2.5.7"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.7.tgz#cc872c168880ae3c7189762fd5ffc00896c9518a"
+
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.17:
   version "1.3.18"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.18.tgz#3dcc99da3e6b665f6abbc71c28ad51a2cd731a9c"
@@ -1717,7 +1721,7 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-express@^4.13.3:
+express@^4.13.3, express@^4.15.2:
   version "4.15.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.15.4.tgz#032e2253489cf8fce02666beca3d11ed7a2daed1"
   dependencies:
@@ -1856,7 +1860,7 @@ filesize@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.3.0.tgz#53149ea3460e3b2e024962a51648aa572cf98122"
 
-filesize@3.5.10:
+filesize@3.5.10, filesize@^3.5.9:
   version "3.5.10"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.5.10.tgz#fc8fa23ddb4ef9e5e0ab6e1e64f679a24a56761f"
 
@@ -1966,13 +1970,6 @@ fs-extra@^4.0.0:
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
-
-fsevents@1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-1.0.17.tgz#8537f3f12272678765b4fd6528c0f1f66f8f4558"
-  dependencies:
-    nan "^2.3.0"
-    node-pre-gyp "^0.6.29"
 
 fsevents@^1.0.0:
   version "1.1.2"
@@ -2133,7 +2130,7 @@ growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
 
-gzip-size@3.0.0:
+gzip-size@3.0.0, gzip-size@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/gzip-size/-/gzip-size-3.0.0.tgz#546188e9bdc337f673772f81660464b389dce520"
   dependencies:
@@ -3589,7 +3586,7 @@ node-notifier@^5.0.2:
     shellwords "^0.1.0"
     which "^1.2.12"
 
-node-pre-gyp@^0.6.29, node-pre-gyp@^0.6.36:
+node-pre-gyp@^0.6.36:
   version "0.6.36"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.36.tgz#db604112cb74e0d477554e9b505b17abddfab786"
   dependencies:
@@ -3753,6 +3750,10 @@ onetime@^2.0.0:
   resolved "https://registry.yarnpkg.com/onetime/-/onetime-2.0.1.tgz#067428230fd67443b2794b22bba528b6867962d4"
   dependencies:
     mimic-fn "^1.0.0"
+
+opener@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.3.tgz#5c6da2c5d7e5831e8ffa3964950f8d6674ac90b8"
 
 opn@4.0.2:
   version "4.0.2"
@@ -4549,45 +4550,6 @@ react-router@^4.1.1:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
-react-scripts-ts@2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/react-scripts-ts/-/react-scripts-ts-2.5.0.tgz#bac40d432e90ae09ae4c07d8f0296be43b21f8b1"
-  dependencies:
-    app-root-path "^2.0.1"
-    autoprefixer "7.1.0"
-    case-sensitive-paths-webpack-plugin "2.0.0"
-    chalk "1.1.3"
-    cli-highlight "1.1.4"
-    css-loader "0.28.1"
-    dotenv "4.0.0"
-    extract-text-webpack-plugin "2.1.0"
-    file-loader "0.11.1"
-    fs-extra "3.0.1"
-    html-webpack-plugin "2.28.0"
-    jest "20.0.3"
-    object-assign "4.1.1"
-    postcss-flexbugs-fixes "3.0.0"
-    postcss-loader "2.0.5"
-    promise "7.1.1"
-    react-dev-utils "^2.0.1"
-    react-error-overlay "^1.0.6"
-    source-map-loader "^0.2.1"
-    style-loader "0.17.0"
-    sw-precache-webpack-plugin "0.9.1"
-    ts-jest "^20.0.7"
-    ts-loader "^2.2.1"
-    tslint "^5.2.0"
-    tslint-loader "^3.5.3"
-    tslint-react "^3.0.0"
-    typescript "~2.4.0"
-    url-loader "0.5.8"
-    webpack "2.6.0"
-    webpack-dev-server "2.4.5"
-    webpack-manifest-plugin "1.1.0"
-    whatwg-fetch "2.0.3"
-  optionalDependencies:
-    fsevents "1.0.17"
-
 react-test-renderer@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.6.1.tgz#026f4a5bb5552661fd2cc4bbcd0d4bc8a35ebf7e"
@@ -4903,6 +4865,10 @@ rx@^4.1.0:
 safe-buffer@5.1.1, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+
+safe-buffer@~5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
 sane@~1.6.0:
   version "1.6.0"
@@ -5488,7 +5454,7 @@ trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
 
-ts-jest@^20.0.10, ts-jest@^20.0.7:
+ts-jest@^20.0.7:
   version "20.0.10"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-20.0.10.tgz#19e9386e6c890d31c2a64e938edc0c84fc937ebc"
   dependencies:
@@ -5611,6 +5577,10 @@ uglify-to-browserify@~1.0.0:
 uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
+
+ultron@~1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.1.0.tgz#b07a2e6a541a815fc6a34ccd4533baec307ca864"
 
 uniq@^1.0.1:
   version "1.0.1"
@@ -5805,6 +5775,22 @@ webidl-conversions@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.1.tgz#8015a17ab83e7e1b311638486ace81da6ce206a0"
 
+webpack-bundle-analyzer@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.9.0.tgz#b58bc34cc30b27ffdbaf3d00bf27aba6fa29c6e3"
+  dependencies:
+    acorn "^5.1.1"
+    chalk "^1.1.3"
+    commander "^2.9.0"
+    ejs "^2.5.6"
+    express "^4.15.2"
+    filesize "^3.5.9"
+    gzip-size "^3.0.0"
+    lodash "^4.17.4"
+    mkdirp "^0.5.1"
+    opener "^1.4.3"
+    ws "^2.3.1"
+
 webpack-dev-middleware@^1.10.2:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-1.12.0.tgz#d34efefb2edda7e1d3b5dbe07289513219651709"
@@ -5986,6 +5972,13 @@ write-file-atomic@^1.1.2:
     graceful-fs "^4.1.11"
     imurmurhash "^0.1.4"
     slide "^1.1.5"
+
+ws@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-2.3.1.tgz#6b94b3e447cb6a363f785eaf94af6359e8e81c80"
+  dependencies:
+    safe-buffer "~5.0.1"
+    ultron "~1.1.0"
 
 xdg-basedir@^2.0.0:
   version "2.0.0"

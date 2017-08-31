@@ -4,6 +4,7 @@ export default function* rootSaga() {
     yield [
         // logger(),
         fetchSaga.watchFetchRequestById(),
-        fetchSaga.watchFetchRequestBySearch()
+        fetchSaga.watchFetchRequestBySearch(),
+        fetchSaga.watchTest()
     ];
 } 

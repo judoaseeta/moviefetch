@@ -4,7 +4,7 @@ export const MovieListContainer = styled.div`
     display: grid;
     padding: 0.3em;
     grid-gap: 0.3em;
-    grid-template-columns: repeat(2, 1fr 1fr);
+    grid-template-columns: repeat(5, 1fr);
     justify-items: center;
     @media (max-width: 1100px) {
         grid-template-columns: 1fr 1fr 1fr
@@ -28,23 +28,27 @@ export const MovieListContainer = styled.div`
         background: #ddd;
     }
 `;
+export const MovieDetailOuterContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+export const MovieDetailPanel = styled.div`
+    background-color: #DADFE1;
+    display: flex;
+    height: 30px;
+`;
 export const MovieDetailContainer = styled.div`
     display: grid;
     padding: 0.3em;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: minmax(10px, 0.1fr) 1fr 1fr;
+    grid-template-columns: 280px repeat(3, 1fr);
+    grid-template-rows: 1fr 1fr;
     grid-gap: 0.4em;
     border: 0.2px black solid;
+    border-top: none;
     background-color: #bdc3c7;
     > img {
         width: 280px;
         height: 410px;
-    }
-    > div.Panel {
-        grid-column: 1/5;
-        background-color: #DADFE1;
-        display: subgrid;
-        justify-items: center;
     }
     > div {
         border: 0.1px white solid;  
@@ -59,8 +63,8 @@ export const MovieSummaryContainer = styled.div`
     display:flex;
     flex-flow: column wrap;
     > img {
-        width: 280px;
-        height: 410px;
+        width: 230px;
+        height: 360px;
     }
     > h4, p {
         word-wrap: break-word;
@@ -148,7 +152,7 @@ export const ModalContainer = styled.div`
     height: 0%;
     &.active {
         width: 100%;
-        height: 100%;
+        height: 150%;
         background-color: black;
         opacity: 0.5;
     }

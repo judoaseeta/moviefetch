@@ -1,10 +1,13 @@
 import * as React from 'react';
-import MovieList from './MovieList';
 import { SearchBarContainer, SearchBarInputContainer, SearchBarInput } from '../components/styled';
 import SearchBarPanel from '../components/SearchBarPanel';
 import { match, Route, withRouter } from 'react-router-dom';
 import { State as SearchState } from '../state/reducers/searchReducer';
+import AsyncComponent from '../utils/asyncComponent';
 import * as H from 'history';
+import { MovieListProps } from './MovieList';
+const MovieList = 
+withRouter(AsyncComponent<MovieListProps>(() => import('./MovieList')) as React.ComponentType<any>);
 export type SearchBarProps = {
     isFetching: boolean;
     history: H.History,   
@@ -62,8 +65,6 @@ class SearchBar extends React.PureComponent<SearchBarProps, {
                         render={() => 
                         <MovieList
                             isFetching={this.props.isFetching}
-                            match={this.props.match}
-                            history={this.props.history}
                             searchState={this.props.searchState}
                             requestMovieById={this.props.apiActions.requestMovieById}
                             requestMovieBySearch={this.props.apiActions.requestMovieBySearch}

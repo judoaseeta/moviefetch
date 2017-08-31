@@ -2,9 +2,9 @@ import * as React from 'react';
 import MovieSummary from '../components/MovieSummary';
 import { MovieListContainer } from '../components/styled';
 import { State as SearchState } from '../state/reducers/searchReducer';
-import { match, withRouter } from 'react-router-dom';
+import { match } from 'react-router-dom';
 import * as H from 'history';
-type MovieListProps = {
+export type MovieListProps = {
     isFetching: boolean;
     history: H.History;
     location: H.Location;
@@ -80,4 +80,4 @@ class MovieList extends React.Component<MovieListProps, {}> {
     }
 }
 
-export default withRouter(MovieList as React.ComponentType<any>);
+export default MovieList;

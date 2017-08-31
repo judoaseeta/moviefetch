@@ -5,7 +5,7 @@ import Modal from './Modal';
 import { Route } from 'react-router-dom';
 import SearchBar from '../containers/SearchBar';
 import { AppContainer } from './styled';
-import MovieDetail from '../containers/MovieDetail';
+import { MovieDetailProps } from '../containers/MovieDetail';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import apiActions from '../state/actions/apiActions';
@@ -14,6 +14,10 @@ import changeSearchStateActions from '../state/actions/changeSearchStateActions'
 import { RootState } from '../state/reducers';
 import { match, withRouter } from 'react-router-dom';
 import * as H from 'history';
+import AsyncComponent from '../utils/asyncComponent';
+const MovieDetail = 
+withRouter(
+    AsyncComponent<MovieDetailProps>(() => import('../containers/MovieDetail')) as React.ComponentType<any>);
 const mapStateToProps = (state: RootState) => {
     return state;
   };
