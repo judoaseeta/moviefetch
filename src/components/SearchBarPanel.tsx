@@ -6,20 +6,19 @@ import KeyList from './KeyList';
 import * as H from 'history';
 const SearchBarPanel: React.SFC<{
     changeSearchStateActions: changeSearchStateActions
-    changeStateActions: changeStateActions
     currentSearchKey: string;
-    currentY: number;
     history: H.History
+    isPanelOpen: boolean;
     searchKeys: Set<string>
     match: match<any>;
 }> = (props) => (
     <Container
-        className={(props.searchKeys.size === 0 ? 'deactive' : '') || (props.currentY >= 260 ? 'fixed' : '')}
+        className={(props.searchKeys.size === 0 ? 'deactive' : '') || (props.isPanelOpen ? 'fixed' : '')}
     >
         <KeyList 
             currentSearchKey={props.currentSearchKey}
-            currentY={props.currentY}
             history={props.history}
+            isPanelOpen={props.isPanelOpen}
             searchKeys={props.searchKeys}
             match={props.match}
         />

@@ -1,23 +1,26 @@
 import actionTypes from '../actions/actionTypes';
-import { MoviesContainer } from '../../utils/movieContainer';
 export const enum Enum {
-    NonSort,
-    SortByAscYear,
-    SortByDescYear
+    NON_SORT = 1,
+    SORT_BY_ASC,
+    SORT_BY_DESC
 }
 export type State = {
     Movies:  { 
-        [key: string]: MoviesContainer 
+       [key: string]: MovieListContainer
     }
     currentSearchKey: string;
     searchKeys: Set<string>;
-    failure: string;
 };
-
+export interface MovieListContainer {
+    Movies: MovieBySearch[];
+    currentPage: number;
+    totalNum: 0;
+    totalPage: 0;
+    sorted: Enum;
+}
 const initialState = {
     Movies: {},
     currentSearchKey: '',
-    failure: '',
     searchKeys: new Set(),
 };
 const searchReducer = (state: State = initialState, action: FetchMovieBySearch) => {
@@ -28,50 +31,69 @@ const searchReducer = (state: State = initialState, action: FetchMovieBySearch) 
                 ...state,
                 currentSearchKey: action.searchKey,
                 searchKeys: state.searchKeys.add(action.searchKey),
-                Movies: {...state.Movies, [action.searchKey]: makeNewMovie(action)}
+                Movies: {
+                    ...state.Movies, 
+                    [action.searchKey]: {
+                        Movies: action.Movies,
+                        currentPage: 1,
+                        totalPage: Math.floor(action.total / 10) + 1,
+                        totalNum: action.total,
+                        sorted: Enum.NON_SORT,
+                    }
+                }
             };
-            
-        }
-        if ((action.searchKey === state.currentSearchKey) && state.searchKeys.has(action.searchKey)) {
-            state.Movies[state.currentSearchKey].setMovies(action.Movies);
+        } else {
             return {
                 ...state,
-                Movies: {...state.Movies }
+                Movies: {
+                    ...state.Movies,
+                    [action.searchKey]: {
+                        ...state.Movies[action.searchKey],
+                        Movies: state.Movies[action.searchKey].Movies.concat(action.Movies),
+                        currentPage: state.Movies[action.searchKey].currentPage + 1
+                    }
+                }
             };
         }
-        return state;
-        case actionTypes.FETCH.FETCH_FAIL:
-            return {
-                ...initialState,
-                failure: 'Something was wrong'
-            };
         case actionTypes.CHANGE_SEARCH_STATE.REQUEST_SWITCH_MOVIE:
             return {
                 ...state,
                 currentSearchKey: action.searchKey
             };
         case actionTypes.CHANGE_SEARCH_STATE.SORT_BY_NONE:
-            state.Movies[state.currentSearchKey].changeSorted(Enum.NonSort);
             return {
                 ...state,
-                Movies: {...state.Movies }
+                Movies: {
+                    ...state.Movies,
+                    [state.currentSearchKey]: {
+                        ...state.Movies[state.currentSearchKey],
+                        sorted: Enum.NON_SORT,
+                    }
+                }
             };
         case actionTypes.CHANGE_SEARCH_STATE.SORT_BY_ASC:
-            state.Movies[state.currentSearchKey].changeSorted(Enum.SortByAscYear);
             return {
                 ...state,
-                Movies: {...state.Movies } 
+                Movies: {
+                    ...state.Movies,
+                    [state.currentSearchKey]: {
+                        ...state.Movies[state.currentSearchKey],
+                        sorted: Enum.SORT_BY_ASC
+                    }
+                } 
             };
         case actionTypes.CHANGE_SEARCH_STATE.SORT_BY_DESC:
-            state.Movies[state.currentSearchKey].changeSorted(Enum.SortByDescYear);
             return {
                 ...state,
-                Movies: {...state.Movies }
+                Movies: {
+                    ...state.Movies,
+                    [state.currentSearchKey]: {
+                        ...state.Movies[state.currentSearchKey],
+                        sorted: Enum.SORT_BY_DESC
+                    }
+                }
             };
         default: return state;
     }
 };
-function makeNewMovie(action: FetchMovieBySearch): MoviesContainer {
-    return new MoviesContainer(action.Movies, action.total);
-}
 export default searchReducer;
