@@ -1,83 +1,86 @@
 import * as React from 'react';
 import { match } from 'react-router-dom';
-import { State as MovieDetailState } from '../state/reducers/movieReducer';
+import { RootState } from '../state/reducers/';
 import { 
-    MovieDetailOuterContainer as Outer, 
-    MovieDetailContainer as Inner,
+    MovieDetailOuterContainer as Outer,
     MovieDetailPanel as Panel
 } from '../components/styled';
+import MovieDetail from '../components/MovieDetail';
+import { bindActionCreators, Dispatch } from 'redux';
 import * as H from 'history';
-export type MovieDetailProps = {
+import { connect } from 'react-redux';
+import apiActions from '../state/actions/apiActions';
+import getMovieDetail from '../state/selectors/movieDetails';
+interface MovieDetailProp {
+    MovieDetail: MovieById;
+}
+interface FuncProps {requestMovieById: (id: string) => RequestMovieById; } 
+export interface MergedProps extends MovieDetailProp {
     history: H.History;
     match: match<{id: string}>;
-    MovieDetail: MovieDetailState
     requestMovieById: (id: string) => RequestMovieById;
+}
+const makeMapStateToProps = () => {
+    const getDetails = getMovieDetail();
+    const mapStateToProps = (state: RootState, props: MergedProps) => {
+        return {
+            MovieDetail: getDetails(state, props),
+        };
+    };
+    return mapStateToProps;
 };
-class MovieDetail extends React.PureComponent<MovieDetailProps, {}> {
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+    return {
+        requestMovieById: bindActionCreators(apiActions.requestMovieById, dispatch)
+    };
+};
+
+class MovieDetailContainer extends React.PureComponent<MergedProps, {
+    isRepliesOn: boolean;
+}> {
+    state = {
+        isRepliesOn: false
+    };
     componentDidMount() {
-        if (!this.props.MovieDetail.movieDetails[this.props.match.params.id]) {
+        if (!this.props.MovieDetail) {
             this.props.requestMovieById(this.props.match.params.id);
         }
-    }
-    componentWillUnMount() {
-        console.log('detail will be unmounted');
+        if (window.scrollY !== 0) {
+            window.scrollTo(0, 0);
+        }
     }
     render() {
-        if (this.props.MovieDetail.movieDetails[this.props.match.params.id]) {
-            const details = this.props.MovieDetail.movieDetails[this.props.match.params.id];
+        if (this.props.MovieDetail) {
+            const details = this.props.MovieDetail;
             return(
                 <Outer>
                     <Panel>
-                        <button onClick={() => this.props.history.goBack()}>Back</button>
+                        <button 
+                            onClick={this.props.history.goBack}
+                        ><i className="fa fa-angle-left fa-2x" aria-hidden="true" />
+                        </button>
+                        <button
+                            onClick={this.onReplies}
+                        >
+                            <i className="fa fa-comments fa-2x" aria-hidden="true" />
+                        </button>
                     </Panel>
-                    <Inner>
-                        <img
-                            className="tello"
-                            src={details.Poster} 
-                        />
-                        <div>
-                            <span>Title:<p>{details.Title}</p></span>
-                            <span>Type:<p>{details.Type}</p></span>
-                            <span>Runtime:<p>{details.Runtime}</p></span>
-                        </div>
-                        <div>
-                            <span>Plot:<p>{details.Plot}</p></span>
-                        </div>
-                        <div>
-                            Actors: 
-                            <ul>{details.Actors.map((actor) => <li key={actor}>{actor}</li>)}</ul>
-                            Writers:
-                            <ul> {details.Writer.map((writer) => <li key={writer}>{writer}</li>)}</ul>
-                        </div>
-                        <div>
-                            <span>Release: <p>{details.Released}</p></span>
-                            <span>Year: <p>{details.Year}</p></span>
-                        </div>
-                        <div>
-                            Ratings: 
-                            <ul>
-                            {details.Ratings.map((rate) => <li key={rate.Source}>{rate.Source} : {rate.Value}</li>)}
-                            </ul>
-                            <span>
-                            BoxOffice:
-                            <p>{details.BoxOffice}</p>
-                            </span>
-                        </div>
-                        <div>
-                            <p>Production: {details.Production}</p>
-                        </div>
-                        <div>
-                            Countries:
-                            <ul> {details.Country.map((coun) => <li key={coun}>{coun}</li>)}</ul>
-                            Languages:
-                            <ul> {details.Language.map((lang) => <li key={lang}>{lang}</li>)}</ul>
-                        </div>
-                    </Inner>
+                    <MovieDetail 
+                        details={details}
+                        isRepliesOn={this.state.isRepliesOn}
+                    />
                 </Outer>
             );
         } else {
-            return <div>Loading...</div>;
+            return null;
         }
     }
+    private onReplies = () => {
+        this.setState({
+            isRepliesOn: !this.state.isRepliesOn
+        });
+    }
 }
-export default MovieDetail;
+const component = 
+connect<MovieDetailProp, FuncProps, MergedProps >(makeMapStateToProps, mapDispatchToProps)(MovieDetailContainer);
+export default component;
