@@ -7,13 +7,13 @@ export const MovieListContainer = styled.section`
     grid-template-columns: repeat(5, 1fr);
     justify-items: center;
     @media (max-width: 1100px) {
-        grid-template-columns: 1fr 1fr 1fr
+        grid-template-columns: repeat(4, 1fr);
     }
-    @media (max-width: 800px) {
-        grid-template-columns: 1fr 1fr
+    @media (max-width: 820px) {
+        grid-template-columns: repeat(3, 1fr);
     }
-    @media (max-width: 550px) {
-        grid-template-columns: 1fr;
+    @media (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
     }
     > div {
         padding: 0.3em;
@@ -72,6 +72,7 @@ export const ModalContainer = styled.div`
         height: 150%;
         background-color: black;
         opacity: 0.5;
+        z-index: 400;   
     }
 `;
 export const Dummy = styled.span`
@@ -81,9 +82,11 @@ export const SearchBarPanelContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: space-around;
-    width: 100%;
     background: linear-gradient(to right, black, grey);
     padding: 0.3em;
+    @media (max-width: 1100px) {
+        display: none;
+    }
     &.fixed {
         position: fixed;
         top:0;

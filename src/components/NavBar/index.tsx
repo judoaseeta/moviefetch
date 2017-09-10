@@ -4,7 +4,10 @@ import { NavbarContainer} from './styled';
 const NavBar: React.SFC<{}>  = () => (
     <NavbarContainer>  
         <nav>
-            <i className="fa fa-bars fa-2x" aria-hidden="true" />
+            <i 
+                className="fa fa-bars fa-2x hamburger" 
+                aria-hidden="true" 
+            />
             <NavItem
                 isRight={true} 
                 to="/"

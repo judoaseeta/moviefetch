@@ -14,13 +14,15 @@ background: linear-gradient(to right, #3498db, #2980b9);
     text-align: center;
 }
 i {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    margin-left: 4px;
-    @media(min-width: 600px) {
-        display: none;
-    }
+    &.hamburger{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        margin-left: 4px;
+        @media(min-width: 600px) {
+            display: none;
+        }
+    }  
 }
 `;
