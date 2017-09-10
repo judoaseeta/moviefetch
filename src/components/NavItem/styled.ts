@@ -19,4 +19,7 @@ export const NavLinkContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media(max-width: 600px) {
+        display: none;
+    }   
 `;

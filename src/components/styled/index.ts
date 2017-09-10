@@ -1,6 +1,6 @@
 import styled from '../../utils/styledComponent';
 let imageurl = '../../img/bgimage.jpg';
-export const MovieListContainer = styled.div`
+export const MovieListContainer = styled.section`
     display: grid;
     padding: 0.3em;
     grid-gap: 0.3em;
@@ -37,40 +37,6 @@ export const MovieDetailPanel = styled.div`
     display: flex;
     height: 30px;
 `;
-export const MovieDetailContainer = styled.div`
-    display: grid;
-    padding: 0.3em;
-    grid-template-columns: 280px repeat(3, 1fr);
-    grid-template-rows: 1fr 1fr;
-    grid-gap: 0.4em;
-    border: 0.2px black solid;
-    border-top: none;
-    background-color: #bdc3c7;
-    > img {
-        width: 280px;
-        height: 410px;
-    }
-    > div {
-        border: 0.1px white solid;  
-        padding: 1.2em;
-        background-color: #F2F1EF;
-    }
-    > p {
-        display: inline-block;
-    }
-`;
-export const MovieSummaryContainer = styled.div`
-    display:flex;
-    flex-flow: column wrap;
-    > img {
-        width: 230px;
-        height: 360px;
-    }
-    > h4, p {
-        word-wrap: break-word;
-        word-break: keep-all;
-    }
-`;
 export const AppContainer = styled.div`
     margin: 10px auto;
     padding-left: 10px;
@@ -85,20 +51,6 @@ export const HomeContainer = styled.div`
     background-position: center;  
     height: 100vh;
 `;
-export const NavbarContainer = styled.header`
-    display: flex;
-    flex-flow: row nowrap;
-    border-bottom: 1px solid black;
-    height: 40px;
-    justify-content: flex-start;
-    background: linear-gradient(to right, #3498db, #2980b9);
-    > nav {
-        display: flex;
-        justify-content: center;
-        align-items: stretch;
-        text-align: center;
-    }
-`;
 export const SearchBarContainer = styled.div`
     display: grid;
     grid-template-columns: 1fr;
@@ -106,41 +58,6 @@ export const SearchBarContainer = styled.div`
     margin-top: -8px;
 `;
 export const SearchBarControl = styled.div`
-`;
-export const SearchBarInputContainer = styled.div`
-    margin-top: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-`;
-export const SearchBarInput = styled.input`
-    width: 400px;
-    padding: 0.3em;
-    outline: none;
-    @media (max-width: 600px) {
-        width: 200px;
-    }
-`;
-export const SearchBarIcons = styled.div`
-    display: flex;
-    width: 600px;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
-    &.deactive {
-        display: none;
-    }
-`;
-export const SearchBarIcon = styled.button`
-    outline: none;
-    border: none;
-    background: linear-gradient(to bottom, #eee, #ddd);
-    border-right: 0.1em white solid;
-    width: 70px;
-    font-size: 0.8em;
-    &:last-child {
-        border-right: none;
-        margin-right: 10px;
-    }
 `;
 export const ModalLoading = styled.div`
 `;
@@ -175,27 +92,4 @@ export const SearchBarPanelContainer = styled.div`
     &.deactive {
         display: none;
     }
-`;
-export const KeyListContainer = styled.div`
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: center;
-    color: white;
-`;
-export const SearchKeyContainer =  styled.div`
-    display: inline-block;
-    border: 0.3px solid white;
-    position: relative;
-    padding-left: 9px;
-    padding-right: 17px;
-    padding-top: 1px;
-    &.active {
-        border: 0.3px solid red;
-    }
-`;
-export const KeyClose = styled.i`
-    position: absolute;
-    top: 0;
-    right: 0;
 `;

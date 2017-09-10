@@ -1,9 +1,26 @@
 import * as React from 'react';
 import { MovieDetailContainer } from './styled';
+import { ReplyForm } from '../MovieReplies';
+import AsyncComponent from '../../utils/asyncComponent';
+import {Props as MovieRepliesProps } from '../../containers/MovieReplies';
+import { withRouter } from 'react-router-dom';
+const MovieReplies = 
+withRouter(
+AsyncComponent<MovieRepliesProps>(
+    () => import('../../containers/MovieReplies')) as React.ComponentType<any>);
 const MovieDetail: React.SFC<{
-    details: MovieById
-}> = ({details}) => (
+    details: MovieById,
+    isRepliesOn: boolean;
+}> = ({details, isRepliesOn}) => (
     <MovieDetailContainer>
+        <div 
+            className={isRepliesOn ? 'repliesListContainerOn' : 'repliesListContainerOff'}
+        >
+            <MovieReplies />
+            <ReplyForm 
+                movieName={details.Title}
+            />
+        </div>
         <img
             className="tello"
             src={details.Poster} 
@@ -18,9 +35,9 @@ const MovieDetail: React.SFC<{
         </div>
         <div>
             Actors: 
-            <ul>{details.Actors.map((actor) => <li key={actor}>{actor}</li>)}</ul>
+            <p>{details.Actors}</p>
             Writers:
-            <ul> {details.Writer.map((writer) => <li key={writer}>{writer}</li>)}</ul>
+            <p> {details.Writer}</p>
         </div>
         <div>
             <span>Release: <p>{details.Released}</p></span>
@@ -41,9 +58,9 @@ const MovieDetail: React.SFC<{
         </div>
         <div>
             Countries:
-            <ul> {details.Country.map((coun) => <li key={coun}>{coun}</li>)}</ul>
+            <ul> {details.Country}</ul>
             Languages:
-            <ul> {details.Language.map((lang) => <li key={lang}>{lang}</li>)}</ul>
+            <ul> {details.Language}</ul>
         </div>
     </MovieDetailContainer>
 );

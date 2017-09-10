@@ -1,9 +1,10 @@
 import * as React from 'react';
 import NavItem from '../NavItem/';
-import { NavbarContainer } from './styled';
+import { NavbarContainer} from './styled';
 const NavBar: React.SFC<{}>  = () => (
-    <NavbarContainer>
+    <NavbarContainer>  
         <nav>
+            <i className="fa fa-bars fa-2x" aria-hidden="true" />
             <NavItem
                 isRight={true} 
                 to="/"

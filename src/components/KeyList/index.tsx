@@ -6,16 +6,19 @@ import SearchKey from './SearchKey';
 import * as H from 'history';
 const KeyList: React.SFC<{
     currentSearchKey: string;
-    currentY: number;
+    isPanelOpen: boolean;
     history: H.History;
     searchKeys: Set<string>;
     match: match<any>;
 }> = (props) => (
     <Container>
         <i 
-            className={props.currentY >= 250 ? 'fa fa-arrow-up' : ''} 
+            className={props.isPanelOpen ? 'fa fa-arrow-up' : ''} 
             aria-hidden="true" 
-            onClick={(e) => window.scrollTo(0, 0)}
+            onClick={(e) => {
+                window.scrollTo(0, 249);
+                window.scrollTo(0, 0);
+            }}
         />
         {props.searchKeys.size !== 0 
         ?  Array.from(props.searchKeys).map((value) => {

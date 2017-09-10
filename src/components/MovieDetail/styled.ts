@@ -1,23 +1,49 @@
 import styled from '../../utils/styledComponent';
 export const MovieDetailContainer = styled.div`
-display: grid;
-padding: 0.3em;
-grid-template-columns: 280px repeat(3, 1fr);
-grid-template-rows: 1fr 1fr;
-grid-gap: 0.4em;
-border: 0.2px black solid;
-border-top: none;
-background-color: #bdc3c7;
-> img {
-    width: 280px;
-    height: 410px;
-}
-> div {
-    border: 0.1px white solid;  
-    padding: 1.2em;
-    background-color: #F2F1EF;
-}
-> p {
-    display: inline-block;
-}
+    display: grid;
+    padding: 0.3em;
+    grid-template-columns: auto repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-gap: 0.4em;
+    border: 0.2px black solid;
+    border-top: none;
+    background-color: #bdc3c7;
+    position: relative;
+    font-size: 12px;
+    > div {
+        border: 0.1px white solid;  
+        padding: 1.2em;
+        background-color: #F2F1EF;
+    }
+    > img {
+        height: auto;
+        border: 0.1px solid black;
+        @media (max-width: 800px) {
+            grid-column: 1 / 3;
+            grid-row: 1;
+            margin: 0 auto;
+        }
+    }
+    @media (max-width: 800px) {
+        grid-template-columns: 150px 1fr;
+        grid-template-rows: auto repeat(3, 1fr);
+        font-size: 10px;
+    }
+    .repliesListContainerOn {
+        position: absolute;
+        top: 0;
+        background-color: rgba(0,0,0,0.5);
+        display: flex;
+        flex-flow: row nowrap;
+        padding: 3em;
+        justify-content: space-around;
+        flex-grow: 1;
+        @media (max-width: 800px) {
+            flex-direction: column;
+            padding: 0.2em;
+        }
+    }
+    .repliesListContainerOff {
+        display: none;
+    }
 `;
