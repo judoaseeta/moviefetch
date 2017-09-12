@@ -10,8 +10,12 @@ import { bindActionCreators, Dispatch } from 'redux';
 import * as H from 'history';
 import { connect } from 'react-redux';
 import apiActions from '../state/actions/apiActions';
-import getMovieDetail from '../state/selectors/movieDetails';
+import getMovieDetail, { getAuthState } from '../state/selectors/movieDetails';
 interface MovieDetailProp {
+    AuthState: {
+        isLoggedIn: boolean;
+        identityToken: string;
+    };
     MovieDetail: MovieById;
 }
 interface FuncProps {requestMovieById: (id: string) => RequestMovieById; } 
@@ -19,11 +23,14 @@ export interface MergedProps extends MovieDetailProp {
     history: H.History;
     match: match<{id: string}>;
     requestMovieById: (id: string) => RequestMovieById;
+    requestPostReply: (id: string, content: string, rating: number, token: string) => RequestPostReply;
 }
 const makeMapStateToProps = () => {
+    const authstate = getAuthState();
     const getDetails = getMovieDetail();
     const mapStateToProps = (state: RootState, props: MergedProps) => {
         return {
+            AuthState: authstate(state),
             MovieDetail: getDetails(state, props),
         };
     };
@@ -31,7 +38,8 @@ const makeMapStateToProps = () => {
 };
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        requestMovieById: bindActionCreators(apiActions.requestMovieById, dispatch)
+        requestMovieById: bindActionCreators(apiActions.requestMovieById, dispatch),
+        requestPostReply: bindActionCreators(apiActions.requestPostReply, dispatch)
     };
 };
 
@@ -50,6 +58,7 @@ class MovieDetailContainer extends React.PureComponent<MergedProps, {
         }
     }
     render() {
+        const { AuthState } =  this.props;
         if (this.props.MovieDetail) {
             const details = this.props.MovieDetail;
             return(
@@ -65,7 +74,8 @@ class MovieDetailContainer extends React.PureComponent<MergedProps, {
                             <i className="fa fa-comments fa-2x" aria-hidden="true" />
                         </button>
                     </Panel>
-                    <MovieDetail 
+                    <MovieDetail
+                        AuthState={AuthState}
                         details={details}
                         isRepliesOn={this.state.isRepliesOn}
                     />

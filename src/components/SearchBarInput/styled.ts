@@ -8,9 +8,16 @@ export const SearchBarInputContainer = styled.div`
 export const SearchBarInput = styled.input`
     width: 600px;
     padding: 0.2em;
+    padding-left: 40px;
     outline: none;
-    border: 1px solid #2980b9;
+    background-image: url('http://www.freeiconspng.com/uploads/search-icon-png-11.png');
+    background-repeat: no-repeat;
+    background-position: 10px;
+    background-size: 20px;
+    border: none;
+    border-bottom: 1px solid #2980b9;
     font-size: 15px;
+    transition: box-shadow 0.4s ease-in;
     @media (max-width: 600px) {
         width: 200px;
     }

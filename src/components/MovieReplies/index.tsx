@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Rater from 'react-rater';
+import { Link } from 'react-router-dom';
 import 'react-rater/lib/react-rater.css';
 import {
     MovieReplyForm as Form,
@@ -26,7 +27,12 @@ export const Replies: React.SFC<{
     </div>
 );
 export class ReplyForm extends React.PureComponent<{
+    AuthState: {
+        isLoggedIn: boolean;
+        identityToken: string;
+    };
     movieName: string;
+    movieId: string;
 }, {
     stars: number;
 }>  {
@@ -34,20 +40,28 @@ export class ReplyForm extends React.PureComponent<{
         stars: 0
     };
     render() {
+        const { isLoggedIn } =  this.props.AuthState;
         console.log(this.state);
         return (
             <Form>
+            <div
+                className={`nonAuthBlocker ${isLoggedIn ? '' : 'active'}`}
+            >
+                <h4>You must sign-in to write review!</h4>
+                <p>Going to <Link to="/authentication">Authentication</Link> page.</p>
+            </div>
             <label htmlFor="rating">Rating for <span>{this.props.movieName}</span></label>
             <Rater
                 onRate={this.onRate}
             />
-            <label htmlFor="opinion">Opinion for <span>{this.props.movieName}</span></label>
+            <label htmlFor="opinion">Review for <span>{this.props.movieName}</span></label>
             <textarea 
-                name="opinion"
+                name="review"
                 rows={8}
                 cols={50}
             />
-            <button>Sumbit</button>
+            <button
+            >Sumbit</button>
         </Form>
         );
     }

@@ -8,19 +8,25 @@ const Form: React.SFC<{
     formState: number;
     changeFormState: (value: number) => void;
     onChangeHandler: (e: React.FormEvent<HTMLInputElement>) => void;
+    onSubmitHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }> = (props) => (
     <Container>
         <ButtonHolderTop>
                     <SelectButton
-                            className={props.formState === 1 ? 'active' :  ''} 
-                            onClick={(e) => props.changeFormState(1)}
+                        className={props.formState === 0
+                                    ? 'active'
+                                    : ''}
+                        onClick={() => props.changeFormState(0)}
                     >
                     Sign In
                     </SelectButton>
                     <SelectButton
-                            className={props.formState === 0 ? 'active' :  ''}  
-                            onClick={(e) => props.changeFormState(0)}
-                    >Sign Up
+                        className={props.formState === 1 
+                                    ? 'active'
+                                    : ''}
+                        onClick={() => props.changeFormState(1)}
+                    >
+                    Sign Up
                     </SelectButton>
         </ButtonHolderTop>
         <StyledForm>
@@ -49,8 +55,14 @@ const Form: React.SFC<{
                     onChange={props.onChangeHandler}
                 />
                 {props.formState === 0
-                    ?   <button>Sign In</button>
-                    :   <button>Sign Up</button>
+                    ?   <button
+                            onClick={props.onSubmitHandler}
+                    >Sign In
+                    </button>
+                    :   <button
+                            onClick={props.onSubmitHandler}
+                    >Sign Up
+                    </button>
                 }
         </StyledForm>
     </Container>

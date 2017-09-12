@@ -12,7 +12,7 @@ export const MovieListContainer = styled.section`
     @media (max-width: 820px) {
         grid-template-columns: repeat(3, 1fr);
     }
-    @media (max-width: 600px) {
+    @media (max-width: 650px) {
         grid-template-columns: repeat(2, 1fr);
     }
     > div {
@@ -84,13 +84,15 @@ export const SearchBarPanelContainer = styled.div`
     align-items: space-around;
     background: linear-gradient(to right, black, grey);
     padding: 0.3em;
-    @media (max-width: 1100px) {
+    width: 90%;
+    @media (max-width: 1200px) {
         display: none;
     }
     &.fixed {
         position: fixed;
         top:0;
-        left:0;
+        right:0;
+        width: auto;
     }
     &.deactive {
         display: none;

@@ -12,10 +12,9 @@ export const SelectButton = styled.button`
         background: linear-gradient(to right, #3498db, #2980b9);
         color: white;
     } 
-    &.active:hover {
-        background: white;
-        border: 1px solid #3498db;
-        color: #3498db;
+    &:hover {
+        background: linear-gradient(to right, #3498db, #2980b9);
+        color: white;
     }
 `;
 export const ButtonHolderTop = styled.div`
@@ -38,6 +37,7 @@ export const StyledForm = styled.form`
     background-color: white;
     display: flex;
     flex-direction: column;
+    margin-top: 15px;
     > input {
         padding: 0.3em;
     }

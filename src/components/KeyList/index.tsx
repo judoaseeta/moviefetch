@@ -32,7 +32,7 @@ const KeyList: React.SFC<{
                 />
             );
         })
-        : <Dummy>.</Dummy>}
+        : null}
         <Dummy>/</Dummy>
     </Container>
 );

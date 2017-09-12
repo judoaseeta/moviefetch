@@ -1,36 +1,57 @@
 import * as React from 'react';
 import NavItem from '../NavItem/';
-import { NavbarContainer} from './styled';
-const NavBar: React.SFC<{}>  = () => (
+import { NavbarContainer } from './styled';
+const NavBar: React.SFC<{
+    isLoggedIn: boolean;
+    signOut: () => void;
+}>  = (props) => (
     <NavbarContainer>  
-        <nav>
-            <i 
-                className="fa fa-bars fa-2x hamburger" 
-                aria-hidden="true" 
-            />
+        <i 
+            className="fa fa-bars fa-2x hamburger" 
+            aria-hidden="true" 
+        />
+        <nav
+            className="left"
+        >
+            
             <NavItem
+                border={true}
                 isRight={true} 
                 to="/"
             >Home
             </NavItem>
-            <NavItem 
+            <NavItem
+                border={true} 
                 isRight={true} 
                 to="/search"
             >Search
             </NavItem>
         </nav>
         <nav>
-            <NavItem
-                isRight={false} 
-                to="/signin"
-            >Sign In
+            {props.isLoggedIn
+            ? <NavItem
+                border={false}
+                isRight={false}
+                to="#"    
+            >
+                <i 
+                    className="fa fa-unlock-alt fa-2x" 
+                    aria-hidden="true" 
+                    onClick={() => props.signOut()}
+                />
+
             </NavItem>
-            <NavItem
-                isRight={false} 
-                onClick={() => console.log('signOut')}
-                to="#"
-            >Sign Out
+            : <NavItem
+                border={false}
+                isRight={false}
+                to="/authentication" 
+            >
+                <i 
+                    className="fa fa-lock fa-2x" 
+                    aria-hidden="true" 
+                />
             </NavItem>
+            }
         </nav>
     </NavbarContainer>
 );

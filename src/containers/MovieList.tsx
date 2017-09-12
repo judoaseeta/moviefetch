@@ -110,6 +110,7 @@ class MovieList extends React.Component<MergedProps, {}> {
     }
     private infiniteScroller = (): void => {
         if (this.props.MovieList
+            && (this.props.MovieList.currentPage !== this.props.MovieList.totalPage)
             && !this.props.isFetching 
             && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)) {
             this.props.requestMovieBySearch(

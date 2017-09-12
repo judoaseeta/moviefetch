@@ -21,6 +21,7 @@ export const MovieReplyForm = styled.form`
     display: flex;
     flex-direction: column;
     padding: 2em;   
+    position: relative;
     span {
         font-style: italic;
     }
@@ -31,6 +32,34 @@ export const MovieReplyForm = styled.form`
         }
         @media(max-width: 800px) {
             padding: 0.1em;
+        }
+    }
+    .nonAuthBlocker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        color: white;
+        text-align: center;
+        > h4 {
+            font-size: 15px;
+            font-style: italic;
+        }
+        a:visited {
+            color: white;
+        }
+        &.active {
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
         }
     }
 `;
