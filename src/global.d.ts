@@ -1,9 +1,9 @@
 declare interface Action {
     type: string
 }
-declare interface ChangeStatusBar extends Action {
-    currentY: number,
-    maxY: number
+declare interface AppStateAction extends Action{
+    content: string;
+    from: string;
 }
 declare interface RequestMovieById extends Action {
     Id: string
@@ -14,6 +14,28 @@ declare interface RequestMovieBySearch extends Action {
 }
 declare interface RequestMovieByQuery extends Action {
     searchKey: string
+}
+declare interface RequestPostReply extends Action {
+    movieId: string,
+    content: string,
+    rating: number,
+    token: string
+}
+declare interface RequestConfirm extends Action {
+    username: string
+    code: string
+}
+declare interface RequestSignUp extends Action {
+    username: string,
+    email: string,
+    password: string
+}
+declare interface RequestSignIn extends Action {
+    username: string,
+    password: string
+}
+declare interface SaveLastScrollY extends Action {
+    scrollY: number
 }
 declare interface FetchMovieById extends Action {
     MovieDetail: MovieById
@@ -28,19 +50,29 @@ declare interface FetchMovieByQuery extends Action {
     Movies: MovieBySearch[],
     searchKey: string
 }
+declare interface FetchMovieReplies extends Action {
+    replies: Reply[] | null,
+    movieId: string
+}
 declare type Rating = {
     Source: string;
     Value: string;
 }
+declare type Reply = {
+    userName: string;
+    content: string;
+    rating: number;
+    createdAt: number;
+}
 declare type MovieById = {
-    Actors: string[];
+    Actors: string;
     Awards: string;
     BoxOffice: string;
-    Country: string[];
+    Country: string;
     DVD: string;
     Director: string;
-    Genre: string[];
-    Language: string[];
+    Genre: string;
+    Language: string;
     Metascore: number;
     Plot: string;
     Poster: string;
@@ -53,7 +85,7 @@ declare type MovieById = {
     Title: string;
     Type: string;
     Website: string;
-    Writer: string[];
+    Writer: string;
     Year: number;
     imdbID: string;
     imdbRating: number;
@@ -66,22 +98,20 @@ declare type MovieBySearch = {
     Type: string,
     Poster: string
 }
+declare type authActions= {
+    confirmRequest: (username: string, code: string) => RequestConfirm
+    getCurrentUser: () => Action
+    signInRequest: (username: string, password: string) => RequestSignIn
+    signOut: () => Action;
+    signUpRequest: (username: string, email: string, password: string) => RequestSignUp;
+}
 declare type apiActions = {
-    requestMovieById: (Id: string) => RequestMovieById; 
+    requestMovieById: (movieId: string) => RequestMovieById;
     requestMovieBySearch: (searchKey: string, page?: number) => RequestMovieBySearch;
     requestMovieByQuery: (searchKey: string) => RequestMovieByQuery;
+    requestPostReply: (id: string, content: string, rating: number, token: string,) => RequestPostReply;
 }
-declare type changeStateActions = {
-    changeStatusBar: (currentY:number, maxY: number) => ChangeStatusBar
-};
 declare type changeSearchStateActions = {
-    sortByAsc:() => Action
-    sortByDesc:() => Action
-    sortByNone:() => Action
+    sortByYear:(value: string) => Action
     requestSwitch: (searchKey: string) => RequestMovieByQuery;
 };
-declare type ActionList = {
-    apiActions: apiActions,
-    changeSearchStateActions: changeSearchStateActions
-    changeStateActions: changeStateActions
-}

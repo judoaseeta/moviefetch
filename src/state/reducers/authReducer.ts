@@ -1,20 +1,31 @@
 import actionTypes from '../actions/actionTypes';
-import { CognitoUser } from 'amazon-cognito-identity-js';
 interface FetchedUser extends Action {
-    currentUser: CognitoUser;
+    identityToken: string;
+    userName: string;
 }
-type State = {
-    currentUser: CognitoUser | null;
+export type State = {
+    identityToken: string;    
+    isLoggedIn: boolean;
+    userName: string;
 };
 const initialState: State = {
-    currentUser: null
+    identityToken: '',
+    isLoggedIn: false,
+    userName: ''
 };
 const authReducer = (state: State = initialState, action: FetchedUser) => {
     switch (action.type) {
         case actionTypes.AUTH.SIGN_IN_SUCCESS: 
             return {
-                ...state,
-                currentUser: action.currentUser
+                isLoggedIn: true,
+                identityToken: action.identityToken,
+                userName: action.userName
+            };
+        case actionTypes.AUTH.SIGN_OUT:
+            return {
+                identityToken: '',
+                isLoggedIn: false,
+                userName: action.userName
             };
         default: return state;
     }
