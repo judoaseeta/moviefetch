@@ -17,6 +17,7 @@ export const SearchBarInput = styled.input`
     border: none;
     border-bottom: 1px solid #2980b9;
     font-size: 15px;
+    margin-bottom: 15px;
     transition: box-shadow 0.4s ease-in;
     @media (max-width: 600px) {
         width: 200px;

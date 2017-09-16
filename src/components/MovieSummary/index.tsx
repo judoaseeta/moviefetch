@@ -2,11 +2,14 @@ import * as React from 'react';
 import { MovieSummaryContainer } from './styled';
 export type MovieSummaryProps = {
     Movie: MovieBySearch;
+    saveScrollY: () => void;
     requestMovieById: (id: string) => RequestMovieById;
 };
-const MovieSummary: React.SFC<MovieSummaryProps> = ({ Movie, requestMovieById }) => (
+const MovieSummary: React.SFC<MovieSummaryProps> = 
+({ Movie, saveScrollY, requestMovieById }) => (
     <MovieSummaryContainer
         onClick={() => {
+            saveScrollY();
             requestMovieById(Movie.imdbID);
         }}
     >

@@ -18,10 +18,7 @@ export const Replies: React.SFC<{
                     rating={reply.rating}
                     interactive={false}
                 />
-                <input 
-                    value={reply.content}
-                    readOnly={true}
-                />
+                <p>{reply.content}</p>
             </MovieReply>
         ))}
     </div>
@@ -31,17 +28,18 @@ export class ReplyForm extends React.PureComponent<{
         isLoggedIn: boolean;
         identityToken: string;
     };
-    movieName: string;
     movieId: string;
+    requestPostReply: (id: string, content: string, rating: number, token: string) => RequestPostReply;
 }, {
+    review: string;
     stars: number;
 }>  {
     state = {
+        review: '',
         stars: 0
     };
     render() {
         const { isLoggedIn } =  this.props.AuthState;
-        console.log(this.state);
         return (
             <Form>
             <div
@@ -50,20 +48,37 @@ export class ReplyForm extends React.PureComponent<{
                 <h4>You must sign-in to write review!</h4>
                 <p>Going to <Link to="/authentication">Authentication</Link> page.</p>
             </div>
-            <label htmlFor="rating">Rating for <span>{this.props.movieName}</span></label>
+            <label htmlFor="rating">Rating for this movie.</label>
             <Rater
                 onRate={this.onRate}
             />
-            <label htmlFor="opinion">Review for <span>{this.props.movieName}</span></label>
+            <label htmlFor="opinion">Review for this movie.</label>
             <textarea 
                 name="review"
                 rows={8}
                 cols={50}
+                onChange={this.onChangeHandler}
             />
             <button
-            >Sumbit</button>
+                onClick={this.onSubmitHandler}
+            >Submit
+            </button>
         </Form>
         );
+    }
+    private onChangeHandler: React.FormEventHandler<HTMLTextAreaElement> = (e) => {
+        this.setState({
+            review: e.currentTarget.value
+        });
+    }
+    private onSubmitHandler: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+        e.preventDefault();
+        this.props.requestPostReply(
+            this.props.movieId, this.state.review, this.state.stars, this.props.AuthState.identityToken);
+        this.setState({
+            review: '',
+            stars: 0
+        });
     }
     private onRate = (args: OnRateArgs) => {
         if (args.type === 'click') {

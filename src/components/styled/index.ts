@@ -52,10 +52,10 @@ export const HomeContainer = styled.div`
     height: 100vh;
 `;
 export const SearchBarContainer = styled.div`
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
     margin-top: -8px;
+    
 `;
 export const SearchBarControl = styled.div`
 `;
@@ -79,22 +79,46 @@ export const Dummy = styled.span`
     display: none;
 `;
 export const SearchBarPanelContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: space-around;
-    background: linear-gradient(to right, black, grey);
-    padding: 0.3em;
-    width: 90%;
-    @media (max-width: 1200px) {
-        display: none;
+    display: none;
+    font-size: 12px;
+    &.active {
+        align-items: start;
+        border: 1px solid black;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        padding: 0.5em;
+        z-index: 400;
+        max-width: 500px;
+        max-height: 200px;
+        background-color: white;
+        > div {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            > span {
+                text-decoration: underline;
+            }
+        }
     }
+`;
+export const SearchPanelButtonHolder = styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     &.fixed {
         position: fixed;
-        top:0;
-        right:0;
-        width: auto;
+        top: 15px;
+        left: 15px;
+        z-index: 400;
     }
-    &.deactive {
-        display: none;
-    }
+`;
+export const SearchPanelButton = styled.button`
+    max-width: 35px; 
+   
+`;
+export const UpButton = styled.button`
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 400;
 `;

@@ -30,18 +30,11 @@ export const MovieDetailContainer = styled.div`
         font-size: 10px;
     }
     .repliesListContainerOn {
+        background-color: rgba(0,0,0,0.5);
+        padding: 3em;
+        display: flex;
         position: absolute;
         top: 0;
-        background-color: rgba(0,0,0,0.5);
-        display: flex;
-        flex-flow: row nowrap;
-        padding: 3em;
-        justify-content: space-around;
-        flex-grow: 1;
-        @media (max-width: 800px) {
-            flex-direction: column;
-            padding: 0.2em;
-        }
     }
     .repliesListContainerOff {
         display: none;

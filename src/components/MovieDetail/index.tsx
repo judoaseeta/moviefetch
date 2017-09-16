@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { MovieDetailContainer } from './styled';
-import { ReplyForm } from '../MovieReplies';
 import AsyncComponent from '../../utils/asyncComponent';
 import {MergedProps as MovieRepliesProps } from '../../containers/MovieReplies';
 import { withRouter } from 'react-router-dom';
@@ -9,23 +8,14 @@ withRouter(
 AsyncComponent<MovieRepliesProps>(
     () => import('../../containers/MovieReplies')) as React.ComponentType<any>);
 const MovieDetail: React.SFC<{
-    AuthState: {
-        isLoggedIn: boolean;
-        identityToken: string;
-    };
     details: MovieById,
     isRepliesOn: boolean;
-}> = ({AuthState, details, isRepliesOn}) => (
+}> = ({ details, isRepliesOn }) => (
     <MovieDetailContainer>
         <div 
             className={isRepliesOn ? 'repliesListContainerOn' : 'repliesListContainerOff'}
         >
             <MovieReplies />
-            <ReplyForm 
-                AuthState={AuthState}
-                movieId={details.imdbID}
-                movieName={details.Title}
-            />
         </div>
         <img
             className="tello"
