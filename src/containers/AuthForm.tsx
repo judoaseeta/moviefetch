@@ -21,7 +21,6 @@ formState> {
         formState: 0
     };
     render() {
-        console.log(this.props);
         return (
                     <Form 
                         changeFormState={this.changeFormState}

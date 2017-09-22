@@ -3,34 +3,29 @@ import { match } from 'react-router-dom';
 import { RootState } from '../state/reducers/';
 import { 
     MovieDetailOuterContainer as Outer,
-    MovieDetailPanel as Panel
+    MovieDetailPanel as Panel,
+    MovieRepliesWrapper as Wrapper
 } from '../components/styled';
 import MovieDetail from '../components/MovieDetail';
+import Button from '../components/Button';
 import { bindActionCreators, Dispatch } from 'redux';
 import * as H from 'history';
 import { connect } from 'react-redux';
 import apiActions from '../state/actions/apiActions';
-import getMovieDetail, { getAuthState } from '../state/selectors/movieDetails';
+import getMovieDetail from '../state/selectors/movieDetails';
 interface MovieDetailProp {
-    AuthState: {
-        isLoggedIn: boolean;
-        identityToken: string;
-    };
     MovieDetail: MovieById;
 }
-interface FuncProps {requestMovieById: (id: string) => RequestMovieById; } 
+interface DispatchedProps {requestMovieById: (id: string) => RequestMovieById; } 
 export interface MergedProps extends MovieDetailProp {
     history: H.History;
     match: match<{id: string}>;
     requestMovieById: (id: string) => RequestMovieById;
-    requestPostReply: (id: string, content: string, rating: number, token: string) => RequestPostReply;
 }
 const makeMapStateToProps = () => {
-    const authstate = getAuthState();
     const getDetails = getMovieDetail();
     const mapStateToProps = (state: RootState, props: MergedProps) => {
         return {
-            AuthState: authstate(state),
             MovieDetail: getDetails(state, props),
         };
     };
@@ -38,8 +33,7 @@ const makeMapStateToProps = () => {
 };
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        requestMovieById: bindActionCreators(apiActions.requestMovieById, dispatch),
-        requestPostReply: bindActionCreators(apiActions.requestPostReply, dispatch)
+        requestMovieById: bindActionCreators(apiActions.requestMovieById, dispatch)
     };
 };
 
@@ -58,24 +52,28 @@ class MovieDetailContainer extends React.PureComponent<MergedProps, {
         }
     }
     render() {
-        const { AuthState } =  this.props;
+        const { isRepliesOn } = this.state;
         if (this.props.MovieDetail) {
             const details = this.props.MovieDetail;
             return(
                 <Outer>
+                    <Wrapper 
+                        className={isRepliesOn ? 'active' : ''}
+                        onClick={this.onReplies}
+                    />
                     <Panel>
-                        <button 
-                            onClick={this.props.history.goBack}
-                        ><i className="fa fa-angle-left fa-2x" aria-hidden="true" />
-                        </button>
-                        <button
-                            onClick={this.onReplies}
+                        <Button
+                            onClickHandler={this.props.history.goBack}
+                        >
+                            <i className="fa fa-angle-left fa-2x" aria-hidden="true" />
+                        </Button>
+                        <Button
+                            onClickHandler={this.onReplies}
                         >
                             <i className="fa fa-comments fa-2x" aria-hidden="true" />
-                        </button>
+                        </Button>
                     </Panel>
                     <MovieDetail
-                        AuthState={AuthState}
                         details={details}
                         isRepliesOn={this.state.isRepliesOn}
                     />
@@ -92,5 +90,5 @@ class MovieDetailContainer extends React.PureComponent<MergedProps, {
     }
 }
 const component = 
-connect<MovieDetailProp, FuncProps, MergedProps >(makeMapStateToProps, mapDispatchToProps)(MovieDetailContainer);
+connect<MovieDetailProp, DispatchedProps, MergedProps >(makeMapStateToProps, mapDispatchToProps)(MovieDetailContainer);
 export default component;

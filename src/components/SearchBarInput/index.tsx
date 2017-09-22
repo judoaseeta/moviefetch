@@ -4,16 +4,18 @@ import {
     SearchBarInput as Input 
 } 
 from './styled';
-const SearchBarInput: React.SFC<{
+export type SearchBarInputType = {
     onChangeHandler: (e: React.FormEvent<HTMLInputElement>) => void;
     onClickHandler: (e: React.SyntheticEvent<HTMLButtonElement>) => void;
     onKeyPressHandler: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-}> = (props) => (
+};
+const SearchBarInput: React.SFC<SearchBarInputType> = (props) => (
     <SearchBarInputContainer>
         <Input 
             onChange={props.onChangeHandler}
             onKeyPress={props.onKeyPressHandler}
-            placeholder="Type Keyword to find"  
+            placeholder="Type Keyword to find"
+            type="search"  
         />
         <button 
             onClick={props.onClickHandler}

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MovieFetch",
+  "name": "MovieFetch - portfolio app for becoming developer",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,16 +1,13 @@
 import * as React from 'react';
 import { HomeContainer } from './styled';
-import AsyncComponent from '../utils/asyncComponent';
-import { Props } from './Test';
-const TestAsync =  AsyncComponent<Props>(() => import('./Test'));
 const Home: React.SFC<{
-}> = () => (
+    getCurrentUser: () => Action;
+    requestConfirm: (username: string, code: string) => RequestConfirm;
+    requestSignIn: (username: string, password: string) => RequestSignIn;
+    requestSignUp: (username: string, email: string, password: string) => RequestSignUp;
+}> = (props) => (
     <HomeContainer>Home
-        <TestAsync
-            tolga="G"
-            message="hi"
-            jotka="hi"
-        />
+        hi
     </HomeContainer>
 );
 export default Home;

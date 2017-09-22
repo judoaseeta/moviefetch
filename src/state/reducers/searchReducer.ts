@@ -44,7 +44,8 @@ const searchReducer =
         default: return state;
     }
 };
-const fetchReducer = (state: State, action: FetchMovieBySearch ) => {
+// Sub-reducers.
+export const fetchReducer = (state: State, action: FetchMovieBySearch ) => {
     // it will determine search result of dispatched action 
     // is already exists or not.
     if (!state.searchKeys.has(action.searchKey)) {
@@ -78,7 +79,7 @@ const fetchReducer = (state: State, action: FetchMovieBySearch ) => {
     };
     }
 };
-const sortFunction = (state: State, type: MovieSort) => {
+export const sortFunction = (state: State, type: MovieSort) => {
     return {
         ...state,
         Movies: {
@@ -90,7 +91,7 @@ const sortFunction = (state: State, type: MovieSort) => {
         }
     };
 };
-const setScrollY = (state: State, scrollY: number) => {
+export const setScrollY = (state: State, scrollY: number) => {
     return {
         ...state,
         Movies: {

@@ -25,7 +25,7 @@ const authReducer = (state: State = initialState, action: FetchedUser) => {
             return {
                 identityToken: '',
                 isLoggedIn: false,
-                userName: action.userName
+                userName: ''
             };
         default: return state;
     }

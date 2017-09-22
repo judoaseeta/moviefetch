@@ -10,7 +10,11 @@ export const MovieDetailContainer = styled.div`
     background-color: #bdc3c7;
     position: relative;
     font-size: 12px;
-    > div {
+    > div.movieRepliesWrapper {
+        position: absolute;
+        width: 100%;
+    }
+    > div.movieDetailDiv{
         border: 0.1px white solid;  
         padding: 1.2em;
         background-color: #F2F1EF;
@@ -28,15 +32,5 @@ export const MovieDetailContainer = styled.div`
         grid-template-columns: 150px 1fr;
         grid-template-rows: auto repeat(3, 1fr);
         font-size: 10px;
-    }
-    .repliesListContainerOn {
-        background-color: rgba(0,0,0,0.5);
-        padding: 3em;
-        display: flex;
-        position: absolute;
-        top: 0;
-    }
-    .repliesListContainerOff {
-        display: none;
     }
 `;

@@ -2,16 +2,12 @@ import * as React from 'react';
 import { MovieSummaryContainer } from './styled';
 export type MovieSummaryProps = {
     Movie: MovieBySearch;
-    saveScrollY: () => void;
     requestMovieById: (id: string) => RequestMovieById;
 };
 const MovieSummary: React.SFC<MovieSummaryProps> = 
-({ Movie, saveScrollY, requestMovieById }) => (
+({ Movie, requestMovieById }) => (
     <MovieSummaryContainer
-        onClick={() => {
-            saveScrollY();
-            requestMovieById(Movie.imdbID);
-        }}
+        onClick={() => requestMovieById(Movie.imdbID)}
     >
         {Movie.Poster ? <img src={Movie.Poster} alt="Movie Poster" /> 
                             : null}

@@ -19,9 +19,24 @@ const requestMovieByQuery = (searchKey: string) => {
         searchKey: searchKey
     };
 };
-
+export const requestMovieReply = (movieId: string) => {
+    return {
+        type: actionTypes.API.REQUEST_MOVIE_REPLY,
+        movieId: movieId
+    };
+};
+export const requestPostReply = (id: string, content: string, rating: number, token: string) => {
+    return {
+        type: actionTypes.API.REQUEST_POST_REPLY,
+        movieId: id,
+        content: content,
+        rating: rating,
+        token: token,
+    };
+};
 export default {
     requestMovieById,
     requestMovieBySearch,
     requestMovieByQuery,
+    requestPostReply
 };

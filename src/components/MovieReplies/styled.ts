@@ -1,10 +1,14 @@
 import styled from '../../utils/styledComponent';
-
 export const Container = styled.div`
     display: flex;
-    flex-flow: row nowrap;
+    flex-direction: row;
     justify-content: space-around;
-    flex-grow: 1;
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    border-color: 0.1px white solid;
+    padding: 3em;
+    top: 0;
+    z-index: 501;
     @media(max-width: 800px) {
         flex-direction: column;
         padding: 0.2em;
@@ -15,14 +19,39 @@ export const MovieReply = styled.div`
     flex-direction: column;
     border: 0.1px solid black;
     border-bottom: none;
-    padding: 0.4em;
+    padding: 0.2em;
+    padding-bottom: none;
+    min-width: 200px;
     max-width: 300px;
+    &.userReview {
+        border: 0.5px solid blue;
+        margin-bottom: 6px;
+        position: relative;
+        .deletePanel {
+            border: 0.1px red solid;
+            background-color: black;
+            color: white;
+            position: absolute;
+            z-index: 400;
+            width: 120px;
+            top: 20px;
+            right: 3px;
+        }
+    }
+    > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
     &:last-child {
         border-bottom: 0.1px solid black;
     }
-    > p {
-        font-size: 11px;
-    }
+`;
+export const Content = styled.div`
+    background-color: #F2F1EF;
+    border: 0.1px solid grey;
+    padding: 0.2em;
+    margin-top: 3px;
 `;
 export const MovieRepliesContainer = styled.div`
     display: flex;
@@ -84,7 +113,60 @@ export const MovieReplyForm = styled.form`
         }
     }
 `;
+export const ReplyTopRight = styled.div`
+    display: flex;
+    justify-content: space-between;
+    > span{
+        border: 0.1px solid black;
+        padding: 0.1em;
+        width: 10px;
+        height: 10px;
+        text-align: center;
+        cursor: pointer;
+        margin-left: 3px;
+    }
+    > span:hover {
+        background-color: black;
+        color: white;
+    }
+`;
+export const ReplyDate = styled.div`
+    align-self: flex-end;
+`;
 export const RateBlock = styled.div`
     display: flex;
     flex-direction: row;
+`;
+export const DeletePanelContainer = styled.div`
+    font-size: 11px;
+    padding: 0.15em;
+    text-align: center;
+    > p {
+        font-size: 13px;
+        margin-top: 0;
+    }
+`;
+export const DeletePanelButtons = styled.div`
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2px;
+    > span {
+        background-color: black;
+        color: white;
+        border: 0.1px solid white;
+        cursor: pointer;
+        padding: 0.2em;
+        &.yes{
+           &:hover {
+               background-color: red;
+               color: white;
+           } 
+        }
+        &.no {
+            &:hover {
+                background-color: blue;
+                color: white;
+            }              
+        }
+    }
 `;

@@ -1,37 +1,62 @@
+// react component
 import * as React from 'react';
-import { SearchBarContainer } from '../components/styled';
-import SearchBarInput from '../components/SearchBarInput';
+import { 
+    SearchBarContainer, 
+    SearchPanelButton,
+    SearchPanelButtonHolder as Holder
+} from '../components/styled';
 import SearchBarPanel from '../components/SearchBarPanel';
+import SearchBarInput from '../components/SearchBarInput';
+// dependencies
 import { match, Route, withRouter } from 'react-router-dom';
-import { RootState } from '../state/reducers/';
-import { State as AppState } from '../state/reducers/appStatus';
-import { State as SearchState } from '../state/reducers/searchReducer';
-import AsyncComponent from '../utils/asyncComponent';
+import { connect } from 'react-redux';
 import * as H from 'history';
-import { MergedProps } from './MovieList';
+import AsyncComponent from '../utils/asyncComponent';
 import { bindActionCreators, Dispatch } from 'redux';
+// typescript related
+import { RootState } from '../state/reducers/';
+import { MergedProps } from './MovieList';
+// Action dispatchers.
 import apiActions from '../state/actions/apiActions';
 import changeSearchStateActions from '../state/actions/changeSearchStateActions';
-import { connect } from 'react-redux';
+// Redux related.
+import { getKeys } from '../state/selectors/searchBar';
 const MovieList = 
 withRouter(AsyncComponent<MergedProps>(() => import('./MovieList')) as React.ComponentType<any>);
 export type SearchBarProps = {
     history: H.History,   
     match: match<any>;
-    appState: AppState;
-    searchState: SearchState;
+    location: H.Location;
+    searchState: {
+        currentSearchKey: string;
+        searchKeys: Set<string>;
+    };
     apiActions: apiActions;
     changeSearchStateActions: changeSearchStateActions
 };
 type SearchBarState = {
     SearchBarKey: string;
+    isButtonFixed: boolean;
     isPanelOpen: boolean;
 };
-const mapStateToProps = (state: RootState) => {
-    return {
-        appState: state.AppState,
-        searchState: state.SearchState
+type MappedProps = {
+    searchState: {
+        currentSearchKey: string;
+        searchKeys: Set<string>;
+    }
+};
+type DispatchProps = {
+    apiActions: apiActions;
+    changeSearchStateActions: changeSearchStateActions
+};
+const makeMapStateToProps = () => {
+    const keys = getKeys();
+    const mapStateToProps = (state: RootState) => {
+        return {
+            searchState: keys(state)
+        };
     };
+    return mapStateToProps;
 };
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
@@ -42,6 +67,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
 class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
     state = {
         SearchBarKey: '',
+        isButtonFixed: false,
         isPanelOpen: false
     };
     componentDidMount() {
@@ -52,18 +78,32 @@ class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
         return (
             <div>
                 <SearchBarContainer>
-                    <SearchBarPanel
-                        changeSearchStateActions={this.props.changeSearchStateActions}
-                        currentSearchKey={this.props.searchState.currentSearchKey}
-                        history={this.props.history}
-                        isPanelOpen={this.state.isPanelOpen}
-                        searchKeys={this.props.searchState.searchKeys}
-                        match={this.props.match}
-                    />
                     <SearchBarInput
                         onChangeHandler={this.onChangeHandler}
                         onClickHandler={this.onFetchHandler}
+                        onKeyPressHandler={this.onKeyPressHandler}
                     />
+                    {this.props.location.pathname.includes('items') 
+                        ? <Holder
+                            className={this.state.isButtonFixed ? 'fixed' : ''}
+                        >
+                        <SearchPanelButton
+                            onClick={this.panelHandler}
+                        >
+                            <i className="fa fa-cog fa-2x" aria-hidden="true" />
+                        </SearchPanelButton>
+                        <SearchBarPanel
+                            changeSearchStateActions={this.props.changeSearchStateActions}
+                            currentSearchKey={this.props.searchState.currentSearchKey}
+                            location={this.props.location}
+                            history={this.props.history}
+                            isPanelOpen={this.state.isPanelOpen}
+                            searchKeys={this.props.searchState.searchKeys}
+                            match={this.props.match}
+                        />
+                        </Holder>
+                        : null
+                    }
                     <br />
                 </SearchBarContainer>
                     <Route 
@@ -74,6 +114,11 @@ class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
                     />
             </div>
         );
+    }
+    private panelHandler: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+        this.setState({
+            isPanelOpen: !this.state.isPanelOpen
+        });
     }
     private historyListener = () => {
         this.props.history.listen((location) => {
@@ -92,24 +137,37 @@ class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
     private saveScrollValue = () => {
         if (window.scrollY >= 260) {
             this.setState({
-                isPanelOpen: true
+                isButtonFixed: true
             });
         } else {
             this.setState({
-                isPanelOpen: false
+                isButtonFixed: false
             });
         }
     }
-    private onChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    private onChangeHandler: React.FormEventHandler<HTMLInputElement> = (e) => {
             this.setState({
-                SearchBarKey: e.currentTarget.value.toLowerCase()
+                SearchBarKey: e.currentTarget.value
             });
     }
+    private fetchInvoker = () => {
+        let key = this.state.SearchBarKey;
+        this.setState({
+            SearchBarKey: ''
+        });
+        this.props.apiActions.requestMovieBySearch(key.toLowerCase());
+    }
     private onFetchHandler = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        this.props.apiActions.requestMovieBySearch(this.state.SearchBarKey);
-        // change route via history.push is depreciated due to adapt react-router-redux. 
+        this.fetchInvoker();
+        // change route via history.push is removed due to adapt react-router-redux. 
         // const location = `${this.props.match.url}/items/${this.state.SearchBarKey}`;
         // this.props.history.push(location);
     }
+    private onKeyPressHandler: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+        if (e.key === 'Enter') {
+            this.fetchInvoker();
+        }
+        
+    }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect<MappedProps, DispatchProps, SearchBarProps>(makeMapStateToProps, mapDispatchToProps)(SearchBar);

@@ -1,26 +1,37 @@
-/*
 import * as React from 'react';
-import MovieSummary from '../MovieSummary';
-import { mount, ReactWrapper } from 'enzyme';
+import MovieSummary, { MovieSummaryProps } from '../MovieSummary';
+import { MovieSummaryContainer } from '../MovieSummary/styled';
+import { shallow, ShallowWrapper } from 'enzyme';
 
 describe('<MovieSummary />', () => {
-    let Component: ReactWrapper<any, any>;
+    let Component: ShallowWrapper<MovieSummaryProps, {}>;
+    const mockedRequestMovieById = jest.fn();
     const mockedMovie = {
         Title: 'Find the nimo',
         Year: 1998,
         imdbID: '3322332d',
-        Poster: 'http://image',
+        Poster: '',
         Type: 'Movie'
     };
     beforeEach(() => {
-        Component = mount(<MovieSummary Movie={mockedMovie} />);
+        Component = shallow(
+        <MovieSummary 
+            Movie={mockedMovie}
+            requestMovieById={mockedRequestMovieById}
+        />
+        );
     });
-    it('should be rendered', () => {
-        expect(Component.exists()).toBe(true);
+    it('should render movie summary container', () => {
+        const container =  Component.find(MovieSummaryContainer);
+        expect(container.exists()).toBe(true);
     });
     it('should render movie information', () => {
-        const Title =  Component.find('h4').text();
-        expect(Title).toEqual(mockedMovie.Title);
+        const title =  Component.find('h4');
+        expect(title.text()).toEqual(mockedMovie.Title);
+    });
+    it('should invoke requestMovieById when it clicked', () => {
+        const container =  Component.find(MovieSummaryContainer);
+        container.simulate('click');
+        expect(mockedRequestMovieById.mock.calls[0][0]).toEqual(mockedMovie.imdbID);
     });
 });
-*/

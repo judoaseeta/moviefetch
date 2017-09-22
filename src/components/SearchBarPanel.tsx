@@ -1,30 +1,44 @@
 import * as React from 'react';
 import { SearchBarPanelContainer as Container } from './styled';
 import { match } from 'react-router-dom';
-import SearchBarIcons from './SearchBarIcons';
-import KeyList from './KeyList';
 import * as H from 'history';
+import Selector from '../utils/Selector';
+const FindParams = (pathname: string) => {
+    let lastIndexof = pathname.lastIndexOf('/');
+    return pathname.slice(lastIndexof + 1, pathname.length);
+};
+const SortByYears = [ 'NONE-POPULAR', 'RECENT', 'OLD'];
 const SearchBarPanel: React.SFC<{
     changeSearchStateActions: changeSearchStateActions
     currentSearchKey: string;
     history: H.History
+    location: H.Location;
     isPanelOpen: boolean;
     searchKeys: Set<string>
     match: match<any>;
 }> = (props) => (
     <Container
-        className={(props.searchKeys.size === 0 ? 'deactive' : '') || (props.isPanelOpen ? 'fixed' : '')}
+        className={props.isPanelOpen ? 'active' : ''}
     >
-        <KeyList 
-            currentSearchKey={props.currentSearchKey}
-            history={props.history}
-            isPanelOpen={props.isPanelOpen}
-            searchKeys={props.searchKeys}
-            match={props.match}
-        />
-        <SearchBarIcons
-            changeSearchStateActions={props.changeSearchStateActions}
-        />
+        <div>
+            <span>Keywords you've found.</span>
+            <Selector 
+                defaultValue={FindParams(props.location.pathname)}
+                onChangeFunction={(value) => props.history.push(`${props.match.url}/items/${value}`)}
+                values={Array.from(props.searchKeys)}
+            />
+        </div>
+        <div>
+            <span>Retrieve current result.</span>
+            <input />
+        </div>
+        <div>
+            <span>Sort By Year - Movie Released.</span>
+            <Selector
+                values={SortByYears}
+                onChangeFunction={(value: string) => props.changeSearchStateActions.sortByYear(value)}
+            />
+        </div> 
     </Container>
 );
 export default SearchBarPanel;

@@ -6,11 +6,12 @@ export const enum Enum {
     SortByDateRecent,
     SortyByDateOld
 }
+export type RepliesType = {
+    replies: Reply[] | null;
+    sorted: Enum;
+};
 export type State = {
-        [key: string]: {
-            replies: Reply[] | null;
-            sorted: Enum
-        } 
+        [key: string]: RepliesType
 };
 interface ReplySortAction extends Action {
     sort: Enum;
@@ -18,27 +19,24 @@ interface ReplySortAction extends Action {
 }
 const initialState = {
 };
-const movieReducer = (state: State =  initialState, action: FetchMovieReplies & ReplySortAction) => {
+const replyReducer = (state: State =  initialState, action: FetchMovieReplies & ReplySortAction) => {
     if ( action.type === actionTypes.FETCH.FETCH_MOVIE_REPLIES) {
         return {
-                ...state.Replies,
+                ...state,
                 [action.movieId]: {
                     replies: action.replies,
                     sorted: Enum.NonSort
                 } 
         };
     } else if (action.type === actionTypes.REPLY.SORT_REPLY) {
-        return sortReducer(state, action.movieId, action.sort);
+        return {
+            ...state,
+            [action.movieId]: {
+                ...state[action.movieId],
+                sorted: action.sort
+            }
+        };
     }
     return state;
-};
-const sortReducer = (state: State, id: string, sort: Enum) => {
-    return {
-                ...state.Replies,
-                [id]: {
-                    ...state.Replies[id],
-                    sorted: sort
-                }
-    };
-};
-export default movieReducer; 
+};  
+export default replyReducer; 

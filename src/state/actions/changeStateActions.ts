@@ -1,12 +1,18 @@
 import actionTypes from './actionTypes';
 
-const changeStatusBar = (currentY: number, maxY: number) => {
+const toastOn = (content: string, from: string) => {
     return {
-        type: actionTypes.CHANGESTATE.CHANGE_STATUS_BAR,
-        currentY: currentY,
-        maxY: maxY
+        type: actionTypes.CHANGESTATE.TOAST_ON,
+        content: content,
+        from: from
+    };
+};
+const toastOff = () => {
+    return {
+        type: actionTypes.CHANGESTATE.TOAST_OFF
     };
 };
 export default {
-    changeStatusBar,
+    toastOn,
+    toastOff
 };

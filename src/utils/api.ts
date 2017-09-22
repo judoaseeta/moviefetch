@@ -31,11 +31,12 @@ const getReplies = async (movieId: string) => {
     return result.json();
 };
 
-const postReplies = async (movieId: string, content: string, rating: number, token: string) => {
+const postReplies = async (movieId: string, content: string, rating: number, userName: string, token: string) => {
     const path = `${apiGateway.URL}/${movieId}`;
     const body = {
         content: content,
-        rating: rating
+        rating: rating,
+        userName: userName
     };
     const method = 'POST';
     const headers = {
@@ -53,11 +54,12 @@ const postReplies = async (movieId: string, content: string, rating: number, tok
     }
     return result.json();
 };
-const putReplies = async (movieId: string, content: string, rating: number, token: string) => {
+const putReplies = async (movieId: string, content: string, rating: number, userName: string , token: string) => {
     const path = `${apiGateway.URL}/${movieId}`;
     const body = {
         content: content,
-        rating: rating
+        rating: rating,
+        userName: userName
     };
     const method = 'PUT';
     const headers = {

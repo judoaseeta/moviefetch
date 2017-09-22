@@ -1,7 +1,7 @@
 // import react-related
 import * as React from 'react';
 import MovieSummary from '../components/MovieSummary';
-import { MovieListContainer as Container } from '../components/styled';
+import { MovieListContainer as Container, UpButton } from '../components/styled';
 // import redux-related
 import { RootState } from '../state/reducers/';
 import { getMovieList, getIsFetching, getSearchKeys } from '../state/selectors/movieList';
@@ -17,7 +17,9 @@ import * as H from 'history';
 type MovieListProps = {
     isFetching: boolean;
     MovieList: MovieListContainer | null
-    searchKeys: Set<string>;
+    keys: {
+        searchKeys: Set<string>;
+    }
 };
 // props merged by connect
 export type MergedProps = {
@@ -26,16 +28,20 @@ export type MergedProps = {
     location: H.Location;
     match: MovielistMatchProps;
     MovieList: MovieListContainer | null;
-    searchKeys: Set<string>;
+    keys: {
+        searchKeys: Set<string>;
+    }
     requestSwitch: (searchKey: string) => RequestMovieByQuery;
     requestMovieById: (id: string) => RequestMovieById;
-    requestMovieBySearch: (searchKey: string, page?: number) => RequestMovieBySearch
+    requestMovieBySearch: (searchKey: string, page?: number) => RequestMovieBySearch;
+    saveLastScrollY: (scrollY: number) => SaveLastScrollY;
 };
 // props dispatch action
 type DispatchProps = {
     requestSwitch: (searchKey: string) => RequestMovieByQuery;
     requestMovieById: (id: string) => RequestMovieById;
-    requestMovieBySearch: (searchKey: string, page?: number) => RequestMovieBySearch
+    requestMovieBySearch: (searchKey: string, page?: number) => RequestMovieBySearch;
+    saveLastScrollY: (scrollY: number) => SaveLastScrollY
 };
 // route prop;
 type MovielistMatchProps = match<{item: string}>;
@@ -49,7 +55,7 @@ const makeMapStateToProps = () => {
         return {
             isFetching: isFetching(state),
             MovieList: getList(state, props),
-            searchKeys: searchKeys(state)
+            keys: searchKeys(state)
         };
     };
     return mapStateToProps;
@@ -58,38 +64,68 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
         requestMovieById: bindActionCreators(apiActions.requestMovieById, dispatch),
         requestMovieBySearch: bindActionCreators(apiActions.requestMovieBySearch, dispatch),
-        requestSwitch: bindActionCreators(changeSearchStateActions.requestSwitch, dispatch)
+        requestSwitch: bindActionCreators(changeSearchStateActions.requestSwitch, dispatch),
+        saveLastScrollY: bindActionCreators(changeSearchStateActions.setLastScrollY, dispatch)
     };
 };
 class MovieList extends React.Component<MergedProps, {}> {
     componentDidMount() {
-        if (!this.props.searchKeys.has(this.props.match.params.item)) {
-            this.props.requestMovieBySearch(this.props.match.params.item);
+        const { MovieList, keys, match, requestMovieBySearch} = this.props;
+        if (!keys.searchKeys.has(match.params.item)) {
+            requestMovieBySearch(match.params.item);
+        }
+        if (MovieList && MovieList.lastScrollY) {
+            window.scrollTo(0, MovieList.lastScrollY);
         }
         this.historyListener();
         this.addListener();
     }
     componentWillReceiveProps(nextProps: MergedProps) {
         const isParamChanged = this.props.match.params.item !== nextProps.match.params.item;
+        const { keys, match, requestMovieBySearch, requestSwitch} = this.props;
         if (isParamChanged) {
-            if (this.props.searchKeys.has(nextProps.match.params.item)) {
-                this.props.requestSwitch(nextProps.match.params.item);
-                this.addListener();
+            if (match.params.item !== nextProps.match.params.item && 
+                keys.searchKeys.has(nextProps.match.params.item)) {
+                requestSwitch(nextProps.match.params.item);
+                this.historyListener();
+                this.addListener();    
             } else {
-                this.props.requestMovieBySearch(nextProps.match.params.item);
+                requestMovieBySearch(nextProps.match.params.item);
             }
+        } 
+    }
+    /// will it works????
+    componentDidUpdate(prevProps: MergedProps) {
+        const { MovieList } = prevProps;
+        if (MovieList && MovieList.lastScrollY) {
+            window.scrollTo(0, MovieList.lastScrollY);
         }
     }
     render() {
+        const { MovieList, requestMovieById } = this.props;
         return (
             <Container>
-                {this.props.MovieList
-                ?   this.props.MovieList.Movies.map((movie: MovieBySearch) => {
+                {/* 
+                    UpButton must be implement in order to harmonized with current button.
+                */}
+                <UpButton
+                        onClick={(e) => {
+                            window.scrollTo(0, 0);
+                        }}    
+                >
+                    <i 
+                        className={'fa fa-arrow-up fa-2x'} 
+                        aria-hidden="true" 
+                        
+                    />
+                </UpButton>
+                {MovieList
+                ?   MovieList.Movies.map((movie: MovieBySearch) => {
                     return (
                             <MovieSummary 
                                 key={(movie.imdbID + Math.random().toString())}
                                 Movie={movie}
-                                requestMovieById={this.props.requestMovieById}
+                                requestMovieById={requestMovieById}
                             />
                             );
                     })
@@ -102,21 +138,26 @@ class MovieList extends React.Component<MergedProps, {}> {
     }
     private historyListener = (): void => {
         this.props.history.listen((location) => {
-            if (!location.pathname.includes('/search/items/')) {
+            if (!location.pathname.includes(`${this.props.match.params.item}`)) {
+                this.saveScrollY();
                 this.offEventListener();
                 this.historyListener();
             }
         });
     }
     private infiniteScroller = (): void => {
-        if (this.props.MovieList
-            && (this.props.MovieList.currentPage !== this.props.MovieList.totalPage)
-            && !this.props.isFetching 
+        const { MovieList, isFetching, match, requestMovieBySearch} = this.props;
+        if (MovieList
+            && (MovieList.currentPage !== MovieList.totalPage)
+            && !isFetching 
             && ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)) {
-            this.props.requestMovieBySearch(
-                this.props.match.params.item, 
-                this.props.MovieList.currentPage + 1);
+            requestMovieBySearch(
+                match.params.item, 
+                MovieList.currentPage + 1);
         }
+    }
+    private saveScrollY = () => {
+        this.props.saveLastScrollY(window.scrollY);
     }
     private offEventListener = (): void => {
         window.removeEventListener('scroll', this.infiniteScroller);

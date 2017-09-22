@@ -118,7 +118,20 @@ export const SearchPanelButton = styled.button`
 `;
 export const UpButton = styled.button`
     position: fixed;
-    bottom: 15px;
+    bottom: 50px;
     right: 15px;
     z-index: 400;
+`;
+export const MovieRepliesWrapper = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 0%;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 500;
+    &.active {
+        width: 100%;
+        height: 100%;
+    }
 `;
