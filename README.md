@@ -19,3 +19,8 @@ we use switch statement in our reducers normally.
 
 4. it is hard to deal with deep structure object.
 redux is based on immutability concept which forced to return new state based on pure function rather than mutating state’s reference directly. when state is shallow, it’s not a big problem. but, As state grows, 
+
+what i need to implement 
+- [x] improving redux architecture. 
+- [ ] implement some features for app. (it's not problem on react, actually it comes from dynamodb-related.
+- [ ] serverside-rendering, web-socket. (i will do it soon).
