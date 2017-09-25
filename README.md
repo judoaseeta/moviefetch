@@ -1,4 +1,8 @@
-# What this portfolio app focused on.
+# Stacks
+
+React, Redux, Redux-saga , Reselect. AWS Lambda
+
+## What this portfolio app focused on.
 
 #### redux has 4 disadvantages. 
 
