@@ -4,7 +4,7 @@ React, Redux, Redux-saga , Reselect. AWS Lambda
 
 ## What this portfolio app focused on.
 
-#### redux has 4 disadvantages. 
+#### redux has 3 disadvantages. 
 
 1. no memoization.
   due to absence of memoization, redux always give whole state to our react components when its state is updated. it means some of our react components will be provided a state which doesn’t need to be update. it can  be solved by adding memoization functionality. it’s possible to  make own memoization  logic inside of mapStateToProps function of react-redux connect.
@@ -20,9 +20,8 @@ React, Redux, Redux-saga , Reselect. AWS Lambda
 
   redux app should have rootReducer which is reducer combining all partial reducers. redux provides helper function ‘combineReducer’ which creates rootReducer conveiniently.
   we use switch statement in our reducers normally.  
-
-4. it is hard to deal with deep structure object.
-    redux is based on immutability concept which forced to return new state based on pure function rather than mutating state’s reference directly. when state is shallow, it’s not a big problem. but, As state grows, 
+  
+  if i use immutablejs or some similar data structure(i'm thinking about using ES6 Map), this problem might be solved. i need to implement it.
 
 what i need to implement 
 - [x] improving redux architecture. 
