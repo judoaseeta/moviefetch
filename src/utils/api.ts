@@ -1,4 +1,3 @@
-const API_KEY = 'f42ed7e7';
 const URL = 'http://www.omdbapi.com';
 const fetchMovieById = (id: string) => (
     fetch(`${URL}/?i=${id}&apikey=${API_KEY}`)
