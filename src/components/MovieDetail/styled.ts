@@ -3,7 +3,7 @@ export const MovieDetailContainer = styled.div`
     display: grid;
     padding: 0.3em;
     grid-template-columns: auto repeat(3, 1fr);
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 2fr;
     grid-gap: 0.4em;
     border: 0.2px black solid;
     border-top: none;

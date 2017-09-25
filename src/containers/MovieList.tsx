@@ -102,6 +102,7 @@ class MovieList extends React.Component<MergedProps, {}> {
         }
     }
     render() {
+        console.log(this.props);
         const { MovieList, requestMovieById } = this.props;
         return (
             <Container>

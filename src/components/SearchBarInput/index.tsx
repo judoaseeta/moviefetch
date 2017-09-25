@@ -15,7 +15,8 @@ const SearchBarInput: React.SFC<SearchBarInputType> = (props) => (
             onChange={props.onChangeHandler}
             onKeyPress={props.onKeyPressHandler}
             placeholder="Type Keyword to find"
-            type="search"  
+            type="search"
+            name="SearchBarKey"  
         />
         <button 
             onClick={props.onClickHandler}

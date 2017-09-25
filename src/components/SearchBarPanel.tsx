@@ -14,6 +14,8 @@ const SearchBarPanel: React.SFC<{
     history: H.History
     location: H.Location;
     isPanelOpen: boolean;
+    onChangeHandler: (e: React.FormEvent<HTMLInputElement>) => void;
+    onKeyPressHandler: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     searchKeys: Set<string>
     match: match<any>;
 }> = (props) => (
@@ -30,7 +32,11 @@ const SearchBarPanel: React.SFC<{
         </div>
         <div>
             <span>Retrieve current result.</span>
-            <input />
+            <input 
+                name="FilterKey"
+                onChange={props.onChangeHandler}
+                onKeyPress={props.onKeyPressHandler}
+            />
         </div>
         <div>
             <span>Sort By Year - Movie Released.</span>

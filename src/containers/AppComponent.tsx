@@ -1,12 +1,13 @@
 // import components
-import Home from './Home';
-import Modal from './Modal';
-import NavBar from './NavBar';
+import Home from '../components/Home';
+import Modal from '../components/Modal';
+import NavBar from '../components/NavBar';
 import { AuthFormProps } from '../containers/AuthForm';
-import { AppContainer } from './styled';
+import { AppContainer } from '../components/styled';
 // import ts.
-import { SearchBarProps } from '../containers/SearchBar';
-import { MergedProps } from '../containers/MovieDetail';
+import { SearchBarProps } from './SearchBar';
+import { MergedProps } from './MovieDetail';
+import { ConfirmProps } from '../components/Confirm';
 // import redux-related.
 import authActions from '../state/actions/authActions';
 import changeStateAcctions from '../state/actions/changeStateActions';
@@ -21,7 +22,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { match, Route, withRouter } from 'react-router-dom';
 import * as H from 'history';
 import AsyncComponent from '../utils/asyncComponent';
-import Toast from '../containers/Toast';
+import Toast from './Toast';
 // Asyncnously imported Component
 const MovieDetail = 
 withRouter(
@@ -30,6 +31,8 @@ const SearchBar =
 withRouter(AsyncComponent<SearchBarProps>(() => import('../containers/SearchBar')) as React.ComponentType<any>);
 const AuthForm = 
     AsyncComponent<AuthFormProps>(() => import('../containers/AuthForm')) as React.ComponentType<any>;
+const Confirm = 
+    AsyncComponent<ConfirmProps>(() => import('../components/Confirm'));
 
 const makeMapStateToProps = () => {
     const appState = getAppState();
@@ -114,6 +117,14 @@ class AppComponent extends React.PureComponent<AppProps, {}> {
                                 authActions={authActions}
                                 isLoggedIn={AuthState.isLoggedIn}
                             />
+                        }
+                    />
+                    <Route 
+                        path="/confirm/"
+                        render={() =>
+                           <Confirm 
+                            requestConfirm={authActions.confirmRequest}
+                           />
                         }
                     />
             </AppContainer>

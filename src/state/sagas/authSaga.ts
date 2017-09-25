@@ -8,10 +8,14 @@ import { batchActions } from 'redux-action-batcher';
 import { conFirm, getCurrentUser, getUserToken , signIn, signUp } from '../../utils/authFunctions';
 function* ConfirmRequest(username: string, code: string) {
     try {
-        const result = yield call(conFirm, username, code);
-        console.log(result);
+        yield call(conFirm, username, code);
+        yield put(
+            changeStateActions.toastOn('confirming success. now you can signin with your username' , 'confirmed')
+        );
     } catch (e) {
-        console.log(e);
+        yield put(
+            changeStateActions.toastOn(`confirm failed.${e.message} ` , 'confirm')
+        );
     }
 } 
 function* getUser() {
@@ -27,18 +31,26 @@ function* SignInRequest(username: string, password: string) {
         const result: { session: CognitoUserSession, user: CognitoUser } = yield call(signIn, username, password);
         yield put(batchActions(
             fetchActions.signInSuccess(result.session.getIdToken().getJwtToken(), result.user.getUsername()),
-            push(`/`)
+            push(`/`),
+            changeStateActions.toastOn('Sign In Success', 'Sign In')
         ));
     } catch (e) {
-        yield put(changeStateActions.toastOn(e.message , 'SignIn'));
+        yield put(batchActions(
+            changeStateActions.toastOn(e.message , 'sign-in error')
+        ));
     }
 }
 function* SignUpRequest(username: string, email: string, password: string) {
    try {
-        const result = yield call(signUp, username, email, password);
-        console.log(result);
+        yield call(signUp, username, email, password);
+        yield put(batchActions(
+            changeStateActions.toastOn('Signup success. check your email and get confirmed it' , 'sign-up'),
+            push(`/confirm`)
+        ));
    } catch (e) {
-       console.log(e);
+        yield put(batchActions(
+            changeStateActions.toastOn(`Signup error.${e.message}` , 'sign-up')
+        ));
    }
 }
 function* SignOutRequest() {

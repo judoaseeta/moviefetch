@@ -35,7 +35,9 @@ export type SearchBarProps = {
     changeSearchStateActions: changeSearchStateActions
 };
 type SearchBarState = {
-    SearchBarKey: string;
+    key: {
+        [k: string]: string
+    }
     isButtonFixed: boolean;
     isPanelOpen: boolean;
 };
@@ -66,7 +68,10 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
 };
 class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
     state = {
-        SearchBarKey: '',
+        key: {
+            FilterKey: '',
+            SearchBarKey: ''
+        },
         isButtonFixed: false,
         isPanelOpen: false
     };
@@ -98,6 +103,8 @@ class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
                             location={this.props.location}
                             history={this.props.history}
                             isPanelOpen={this.state.isPanelOpen}
+                            onChangeHandler={this.onChangeHandler}
+                            onKeyPressHandler={this.onKeyPressHandler}
                             searchKeys={this.props.searchState.searchKeys}
                             match={this.props.match}
                         />
@@ -146,26 +153,42 @@ class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
         }
     }
     private onChangeHandler: React.FormEventHandler<HTMLInputElement> = (e) => {
-            this.setState({
-                SearchBarKey: e.currentTarget.value
-            });
-    }
-    private fetchInvoker = () => {
-        let key = this.state.SearchBarKey;
         this.setState({
-            SearchBarKey: ''
+            key: {
+                [e.currentTarget.name] : e.currentTarget.value
+            }
         });
-        this.props.apiActions.requestMovieBySearch(key.toLowerCase());
+    }
+    private fetchInvoker = (e: React.SyntheticEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.currentTarget.name === 'SearchBarKey') {
+            let key = this.state.key.SearchBarKey;
+            this.setState({
+                key: {
+                    SearchBarKey: ''
+                } 
+            });
+            this.props.apiActions.requestMovieBySearch(key.toLowerCase());
+        }
+        if (e.currentTarget.name === 'FilterKey') {
+            let key = this.state.key.FilterKey;
+            this.setState({
+                key: {
+                    FilterKey: ''
+                }
+            });
+            this.props.changeSearchStateActions.setFilterKey(key);
+        }
+        
     }
     private onFetchHandler = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        this.fetchInvoker();
+        this.fetchInvoker(e);
         // change route via history.push is removed due to adapt react-router-redux. 
         // const location = `${this.props.match.url}/items/${this.state.SearchBarKey}`;
         // this.props.history.push(location);
     }
     private onKeyPressHandler: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
         if (e.key === 'Enter') {
-            this.fetchInvoker();
+            this.fetchInvoker(e);
         }
         
     }

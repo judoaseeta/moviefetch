@@ -10,7 +10,7 @@ export const SearchBarInput = styled.input`
     padding: 0.2em;
     padding-left: 40px;
     outline: none;
-    background-image: url('http://www.freeiconspng.com/uploads/search-icon-png-11.png');
+    background-image: url('https://s3.ap-northeast-2.amazonaws.com/moviefetch/search-icon-png-11.png');
     background-repeat: no-repeat;
     background-position: 10px;
     background-size: 20px;

@@ -54,6 +54,9 @@ declare interface FetchMovieReplies extends Action {
     replies: Reply[] | null,
     movieId: string
 }
+declare interface FilterKeyAction extends Action {
+    filterKey: string;
+}
 declare type Rating = {
     Source: string;
     Value: string;
@@ -112,6 +115,8 @@ declare type apiActions = {
     requestPostReply: (id: string, content: string, rating: number, token: string,) => RequestPostReply;
 }
 declare type changeSearchStateActions = {
+    deleteFilterKey: (value: string) => Action;
+    setFilterKey: (value: string) => FilterKeyAction;
     sortByYear:(value: string) => Action
     requestSwitch: (searchKey: string) => RequestMovieByQuery;
 };

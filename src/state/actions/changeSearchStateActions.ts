@@ -1,15 +1,27 @@
 import actionTypes from './actionTypes';
 import { MovieSort } from '../reducers/searchReducer';
+const setFilterKey = (filterKey: string) => {
+    return {
+        type: actionTypes.CHANGE_SEARCH_STATE.SET_FILTER_KEY,
+        filterKey
+    };
+};
+const deleteFilterKey = (filterkey: string) => {
+    return {
+        type: actionTypes.CHANGE_SEARCH_STATE.DEL_FILTER_KEY
+    };
+};
+    
 const setLastScrollY = (scrollY: number) => {
     return {
         type: actionTypes.CHANGE_SEARCH_STATE.SET_LAST_SCROLLY,
-        scrollY: scrollY
+        scrollY
     };
 };
 const requestSwitch = (searchKey: string) => {
     return {
         type: actionTypes.CHANGE_SEARCH_STATE.REQUEST_SWITCH_MOVIE,
-        searchKey: searchKey
+        searchKey
     };
 };
 const sortByYear = (value: string) => {
@@ -37,6 +49,8 @@ const sortByYear = (value: string) => {
     }
 };
 export default {
+    deleteFilterKey,
+    setFilterKey,
     setLastScrollY,
     sortByYear,
     requestSwitch

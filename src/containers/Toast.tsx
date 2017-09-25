@@ -9,8 +9,8 @@ export type ToastProps = {
 class Toast extends React.PureComponent<ToastProps, {}> {
     componentWillReceiveProps(nextProps: ToastProps) {
         const isToastChanged = this.props.toastContent !== nextProps.toastContent;
-        const { isToastOn, toastOff } = this.props;
-        if (isToastChanged && isToastOn) {
+        const { toastOff } = this.props;
+        if (isToastChanged) {
             setTimeout(() => { toastOff(); }, 4000);
         }
     }

@@ -47,7 +47,7 @@ function* requestMovieBySearch(searchKey: string, page: number) {
     yield put({type: actionTypes.FETCH.FETCH_START});
     const {data, timeout} = yield race({
         data: call(api.fetchMovieBySearch, searchKey, page),
-        timeout: call(delay, 20000)
+        timeout: call(delay, 6000)
     });
     if (!timeout) {
         try {

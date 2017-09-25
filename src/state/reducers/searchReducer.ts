@@ -14,6 +14,7 @@ export type State = {
 export interface MovieListContainer {
     Movies: MovieBySearch[];
     currentPage: number;
+    filterKey: string;
     totalNum: 0;
     totalPage: 0;
     sorted: MovieSort;
@@ -28,7 +29,10 @@ const initialState = {
     searchKeys: new Set(),
 };
 const searchReducer = 
-(state: State = initialState, action: FetchMovieBySearch & ChangeSearchStatAction & SaveLastScrollY) => {
+(
+    state: State = initialState, 
+    action: FetchMovieBySearch & ChangeSearchStatAction & SaveLastScrollY & FilterKeyAction
+) => {
     switch (action.type) {
         case actionTypes.FETCH.FETCH_SUCCESS:
         return fetchReducer(state, action);
@@ -41,6 +45,8 @@ const searchReducer =
             return sortFunction(state, action.sort);
         case actionTypes.CHANGE_SEARCH_STATE.SET_LAST_SCROLLY:
             return setScrollY(state, action.scrollY);
+        case actionTypes.CHANGE_SEARCH_STATE.SET_FILTER_KEY:
+            return setFilterKey(state, action.filterKey);
         default: return state;
     }
 };
@@ -58,6 +64,7 @@ export const fetchReducer = (state: State, action: FetchMovieBySearch ) => {
                 [action.searchKey]: {
                     Movies: action.Movies,
                     currentPage: 1,
+                    filterKey: '',
                     totalPage: Math.floor(action.total / 10) + 1,
                     totalNum: action.total,
                     sorted: MovieSort.NON_SORT,
@@ -87,6 +94,18 @@ export const sortFunction = (state: State, type: MovieSort) => {
             [state.currentSearchKey]: {
                 ...state.Movies[state.currentSearchKey],
                 sorted: type
+            }
+        }
+    };
+};
+export const setFilterKey = (state: State, filterKey: string) => {
+    return {
+        ...state,
+        Movies: {
+            ...state.Movies,
+            [state.currentSearchKey]: {
+                ...state.Movies[state.currentSearchKey],
+                filterKey: filterKey
             }
         }
     };
