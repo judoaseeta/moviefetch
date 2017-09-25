@@ -16,12 +16,12 @@ React, Redux, Redux-saga , Reselect. AWS Lambda
 
   core idea to solve this problem is just stop updating reducer until all of batched actions are gathered. i just choose one which has same idea. i made type definition file for it.
 
-3. action must be passed whole reducers.
+3. action must be passed whole reducers and it doesn't have specific structure for dealing update.
 
   redux app should have rootReducer which is reducer combining all partial reducers. redux provides helper function ‘combineReducer’ which creates rootReducer conveiniently.
-  we use switch statement in our reducers normally.  
+  we use switch statement in our reducers normally. then every action dispatched should be passed in all of the statements of 'combined-reducer'. it will siginificantly decrease performance especially in case of using switch statement. 
   
-  if i use immutablejs or some similar data structure(i'm thinking about using ES6 Map), this problem might be solved. i need to implement it.
+  if i use immutablejs or some similar data structure(i'm thinking about using ES6 Map.), this problem might be solved. i need to implement it.
 
 what i need to implement 
 - [x] improving redux architecture. 
