@@ -1,6 +1,6 @@
-What this portfolio app focused on.
+# What this portfolio app focused on.
 
-redux has 4 disadvantages. 
+#### redux has 4 disadvantages. 
 
 1. no memoization.
   due to absence of memoization, redux always give whole state to our react components when its state is updated. it means some of our react components will be provided a state which doesn’t need to be update. it can  be solved by adding memoization functionality. it’s possible to  make own memoization  logic inside of mapStateToProps function of react-redux connect.
@@ -24,3 +24,6 @@ what i need to implement
 - [x] improving redux architecture. 
 - [ ] implement some features for app. (it's not problem on react, actually it comes from dynamodb-related.
 - [ ] serverside-rendering, web-socket. (i will do it soon).
+
+You can see demo app:
+http://volatile-quilt.surge.sh/search
